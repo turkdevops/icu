@@ -1271,7 +1271,7 @@ void NumberFormatterApiTest::unitArbitraryMeasureUnits() {
                 .unitWidth(UNUM_UNIT_WIDTH_FULL_NAME),
             Locale("en-ZA"),
             2.4,
-            u"2,4 kilowatt-hours per 100 kilometers");
+            u"2,4 kilowatt-hours per 100 kilometres");
 }
 
 // TODO: merge these tests into numbertest_skeletons.cpp instead of here:
@@ -2149,6 +2149,26 @@ void NumberFormatterApiTest::unitCurrency() {
             Locale("lu"),
             123.12,
             u"123,12 CN¥");
+
+    // de-CH has currency pattern "¤ #,##0.00;¤-#,##0.00"
+    assertFormatSingle(
+            u"Sign position on negative number with pattern spacing",
+            u"currency/RON",
+            u"currency/RON",
+            NumberFormatter::with().unit(RON),
+            Locale("de-CH"),
+            -123.12,
+            u"RON-123.12");
+
+    // TODO(CLDR-13044): Move the sign to the inside of the number
+    assertFormatSingle(
+            u"Sign position on negative number with currency spacing",
+            u"currency/RON",
+            u"currency/RON",
+            NumberFormatter::with().unit(RON),
+            Locale("en"),
+            -123.12,
+            u"-RON 123.12");
 }
 
 void NumberFormatterApiTest::runUnitInflectionsTestCases(UnlocalizedNumberFormatter unf,
@@ -3818,6 +3838,41 @@ void NumberFormatterApiTest::integerWidth() {
             // Note: this double produces all 17 significant digits
             10000000000000002000.0,
             u"00");
+
+    assertFormatDescending(
+            u"Integer Width Double Zero (ICU-21590)",
+            u"integer-width-trunc",
+            u"integer-width-trunc",
+            NumberFormatter::with()
+                .integerWidth(IntegerWidth::zeroFillTo(0).truncateAt(0)),
+            Locale::getEnglish(),
+            u"0",
+            u"0",
+            u".5",
+            u".65",
+            u".765",
+            u".8765",
+            u".08765",
+            u".008765",
+            u"0");
+
+    assertFormatDescending(
+            u"Integer Width Double Zero with minFraction (ICU-21590)",
+            u"integer-width-trunc .0*",
+            u"integer-width-trunc .0*",
+            NumberFormatter::with()
+                .integerWidth(IntegerWidth::zeroFillTo(0).truncateAt(0))
+                .precision(Precision::minFraction(1)),
+            Locale::getEnglish(),
+            u".0",
+            u".0",
+            u".5",
+            u".65",
+            u".765",
+            u".8765",
+            u".08765",
+            u".008765",
+            u".0");
 }
 
 void NumberFormatterApiTest::symbols() {
@@ -4300,7 +4355,7 @@ void NumberFormatterApiTest::sign() {
                 .unitWidth(UNUM_UNIT_WIDTH_FULL_NAME),
             Locale::getCanada(),
             -444444,
-            u"-444,444.00 US dollars");
+            u"-444,444.00 U.S. dollars");
 }
 
 void NumberFormatterApiTest::signNearZero() {
@@ -5358,6 +5413,12 @@ void NumberFormatterApiTest::toDecimalNumber() {
         u"৯৮,৭৬,৫০,০০,০০,০০,০০০", fn.toString(status));
     assertEquals(u"Should have expected toDecimalNumber string result",
         "9.8765E+14", fn.toDecimalNumber<std::string>(status).c_str());
+
+    fn = NumberFormatter::withLocale("bn-BD").formatDouble(0, status);
+    assertEquals("Should have expected localized string result",
+        u"০", fn.toString(status));
+    assertEquals(u"Should have expected toDecimalNumber string result",
+        "0", fn.toDecimalNumber<std::string>(status).c_str());
 }
 
 void NumberFormatterApiTest::microPropsInternals() {

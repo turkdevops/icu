@@ -1187,7 +1187,7 @@ public class NumberFormatterApiTest extends TestFmwk {
             NumberFormatter.with()
                 .unit(MeasureUnit.forIdentifier("kilowatt-hour-per-100-kilometer"))
                 .unitWidth(UnitWidth.FULL_NAME),
-            new ULocale("en-ZA"), 2.4, "2,4 kilowatt-hours per 100 kilometers");
+            new ULocale("en-ZA"), 2.4, "2,4 kilowatt-hours per 100 kilometres");
     }
 
     // TODO: merge these tests into NumberSkeletonTest.java instead of here:
@@ -2108,6 +2108,26 @@ public class NumberFormatterApiTest extends TestFmwk {
                 ULocale.forLanguageTag("lu"),
                 123.12,
                 "123,12 CN¥");
+
+        // de-CH has currency pattern "¤ #,##0.00;¤-#,##0.00"
+        assertFormatSingle(
+                "Sign position on negative number with pattern spacing",
+                "currency/RON",
+                "currency/RON",
+                NumberFormatter.with().unit(RON),
+                ULocale.forLanguageTag("de-CH"),
+                -123.12,
+                "RON-123.12");
+
+        // TODO(CLDR-13044): Move the sign to the inside of the number
+        assertFormatSingle(
+                "Sign position on negative number with currency spacing",
+                "currency/RON",
+                "currency/RON",
+                NumberFormatter.with().unit(RON),
+                ULocale.forLanguageTag("en"),
+                -123.12,
+                "-RON 123.12");
     }
 
     public static class UnitInflectionTestCase {
@@ -3779,6 +3799,41 @@ public class NumberFormatterApiTest extends TestFmwk {
                 // Note: this double produces all 17 significant digits
                 10000000000000002000.0,
                 "00");
+
+        assertFormatDescending(
+                "Integer Width Double Zero (ICU-21590)",
+                "integer-width-trunc",
+                "integer-width-trunc",
+                NumberFormatter.with()
+                        .integerWidth(IntegerWidth.zeroFillTo(0).truncateAt(0)),
+                ULocale.ENGLISH,
+                "0",
+                "0",
+                ".5",
+                ".65",
+                ".765",
+                ".8765",
+                ".08765",
+                ".008765",
+                "0");
+
+        assertFormatDescending(
+                "Integer Width Double Zero with minFraction (ICU-21590)",
+                "integer-width-trunc .0*",
+                "integer-width-trunc .0*",
+                NumberFormatter.with()
+                        .integerWidth(IntegerWidth.zeroFillTo(0).truncateAt(0))
+                        .precision(Precision.minFraction(1)),
+                ULocale.ENGLISH,
+                ".0",
+                ".0",
+                ".5",
+                ".65",
+                ".765",
+                ".8765",
+                ".08765",
+                ".008765",
+                ".0");
     }
 
     @Test
@@ -4251,7 +4306,7 @@ public class NumberFormatterApiTest extends TestFmwk {
                 NumberFormatter.with().sign(SignDisplay.ACCOUNTING).unit(USD).unitWidth(UnitWidth.FULL_NAME),
                 ULocale.CANADA,
                 -444444,
-                "-444,444.00 US dollars");
+                "-444,444.00 U.S. dollars");
     }
 
     @Test

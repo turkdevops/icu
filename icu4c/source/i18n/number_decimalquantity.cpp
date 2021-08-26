@@ -289,6 +289,11 @@ void DecimalQuantity::adjustExponent(int delta) {
     exponent = exponent + delta;
 }
 
+void DecimalQuantity::resetExponent() {
+    adjustMagnitude(exponent);
+    exponent = 0;
+}
+
 bool DecimalQuantity::hasIntegerValue() const {
     return scale >= 0;
 }
@@ -634,6 +639,7 @@ DecNum& DecimalQuantity::toDecNum(DecNum& output, UErrorCode& status) const {
     // Special handling for zero
     if (precision == 0) {
         output.setTo("0", status);
+        return output;
     }
 
     // Use the BCD constructor. We need to do a little bit of work to convert, though.

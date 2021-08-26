@@ -379,6 +379,14 @@ static double scaleForInt(double d) {
     return scale;
 }
 
+static const double powers10[7] = {1.0, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0}; // powers of 10 for 0..6
+static double applyExponent(double source, int32_t exponent) {
+    if (exponent >= 0 && exponent <= 6) {
+        return source * powers10[exponent];
+    }
+    return source * pow(10.0, exponent);
+}
+
 /**
  * Helper method for the overrides of getSamples() for double and FixedDecimal
  * return value types.  Provide only one of an allocated array of doubles or
@@ -416,7 +424,7 @@ getSamplesFromString(const UnicodeString &samples, double *destDbl,
             if (isDouble) {
                 double sampleValue = fixed.source;
                 if (fixed.visibleDecimalDigitCount == 0 || sampleValue != floor(sampleValue)) {
-                    destDbl[sampleCount++] = sampleValue;
+                    destDbl[sampleCount++] = applyExponent(sampleValue, fixed.exponent);
                 }
             } else {
                 destFd[sampleCount++] = fixed;
@@ -553,34 +561,34 @@ PluralRules::operator==(const PluralRules& other) const  {
     UErrorCode status= U_ZERO_ERROR;
 
     if ( this == &other ) {
-        return TRUE;
+        return true;
     }
     LocalPointer<StringEnumeration> myKeywordList(getKeywords(status));
     LocalPointer<StringEnumeration> otherKeywordList(other.getKeywords(status));
     if (U_FAILURE(status)) {
-        return FALSE;
+        return false;
     }
 
     if (myKeywordList->count(status)!=otherKeywordList->count(status)) {
-        return FALSE;
+        return false;
     }
     myKeywordList->reset(status);
     while ((ptrKeyword=myKeywordList->snext(status))!=nullptr) {
         if (!other.isKeyword(*ptrKeyword)) {
-            return FALSE;
+            return false;
         }
     }
     otherKeywordList->reset(status);
     while ((ptrKeyword=otherKeywordList->snext(status))!=nullptr) {
         if (!this->isKeyword(*ptrKeyword)) {
-            return FALSE;
+            return false;
         }
     }
     if (U_FAILURE(status)) {
-        return FALSE;
+        return false;
     }
 
-    return TRUE;
+    return true;
 }
 
 
