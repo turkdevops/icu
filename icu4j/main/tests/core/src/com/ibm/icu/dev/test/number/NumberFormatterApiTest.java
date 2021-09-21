@@ -3167,6 +3167,78 @@ public class NumberFormatterApiTest extends TestFmwk {
                 "0.000");
 
         assertFormatDescending(
+                "Medium nickel increment with rounding mode ceiling (ICU-21668)",
+                "precision-increment/50 rounding-mode-ceiling",
+                "precision-increment/50 rounding-mode-ceiling",
+                NumberFormatter.with()
+                        .precision(Precision.increment(new BigDecimal("50")))
+                        .roundingMode(RoundingMode.CEILING),
+                ULocale.ENGLISH,
+                "87,650",
+                "8,800",
+                "900",
+                "100",
+                "50",
+                "50",
+                "50",
+                "50",
+                "0");
+        
+        assertFormatDescending(
+                "Large nickel increment with rounding mode up (ICU-21668)",
+                "precision-increment/5000 rounding-mode-up",
+                "precision-increment/5000 rounding-mode-up",
+                NumberFormatter.with()
+                        .precision(Precision.increment(new BigDecimal("5000")))
+                        .roundingMode(RoundingMode.UP),
+                ULocale.ENGLISH,
+                "90,000",
+                "10,000",
+                "5,000",
+                "5,000",
+                "5,000",
+                "5,000",
+                "5,000",
+                "5,000",
+                "0");
+        
+        assertFormatDescending(
+                "Large dime increment with rounding mode up (ICU-21668)",
+                "precision-increment/10000 rounding-mode-up",
+                "precision-increment/10000 rounding-mode-up",
+                NumberFormatter.with()
+                        .precision(Precision.increment(new BigDecimal("10000")))
+                        .roundingMode(RoundingMode.UP),
+                ULocale.ENGLISH,
+                "90,000",
+                "10,000",
+                "10,000",
+                "10,000",
+                "10,000",
+                "10,000",
+                "10,000",
+                "10,000",
+                "0");
+        
+        assertFormatDescending(
+                "Large non-nickel increment with rounding mode up (ICU-21668)",
+                "precision-increment/15000 rounding-mode-up",
+                "precision-increment/15000 rounding-mode-up",
+                NumberFormatter.with()
+                        .precision(Precision.increment(new BigDecimal("15000")))
+                        .roundingMode(RoundingMode.UP),
+                ULocale.ENGLISH,
+                "90,000",
+                "15,000",
+                "15,000",
+                "15,000",
+                "15,000",
+                "15,000",
+                "15,000",
+                "15,000",
+                "0");
+
+        assertFormatDescending(
                 "Increment Resolving to Power of 10",
                 "precision-increment/0.010",
                 "precision-increment/0.010",
@@ -3181,6 +3253,38 @@ public class NumberFormatterApiTest extends TestFmwk {
                 "0.090",
                 "0.010",
                 "0.000");
+
+        assertFormatDescending(
+                "Integer increment with trailing zeros (ICU-21654)",
+                "precision-increment/50",
+                "precision-increment/50",
+                NumberFormatter.with().precision(Precision.increment(new BigDecimal("50"))),
+                ULocale.ENGLISH,
+                "87,650",
+                "8,750",
+                "900",
+                "100",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0");
+
+        assertFormatDescending(
+                "Integer increment with minFraction (ICU-21654)",
+                "precision-increment/5.0",
+                "precision-increment/5.0",
+                NumberFormatter.with().precision(Precision.increment(new BigDecimal("5.0"))),
+                ULocale.ENGLISH,
+                "87,650.0",
+                "8,765.0",
+                "875.0",
+                "90.0",
+                "10.0",
+                "0.0",
+                "0.0",
+                "0.0",
+                "0.0");
 
         assertFormatDescending(
                 "Currency Standard",
@@ -3299,6 +3403,64 @@ public class NumberFormatterApiTest extends TestFmwk {
                 ULocale.ENGLISH,
                 Double.MIN_VALUE,
                 "4.9E-324");
+    }
+
+    @Test
+    public void roundingIncrementRegressionTest() {
+        ULocale locale = ULocale.ENGLISH;
+
+        for (int min_fraction_digits = 1; min_fraction_digits < 8; min_fraction_digits++) {
+            // pattern is a snprintf pattern string like "precision-increment/%.5f"
+            String pattern = String.format("precision-increment/%%.%df", min_fraction_digits);
+            double increment = 0.05;
+            for (int i = 0; i < 8 ; i++, increment *= 10.0) {
+                BigDecimal bdIncrement;
+                if (increment == 0.05 && min_fraction_digits == 1) {
+                    // Special case when the number of fraction digits is too low:
+                    bdIncrement = new BigDecimal("0.05");
+                } else {
+                    bdIncrement = BigDecimal.valueOf(increment).setScale(min_fraction_digits);
+                }
+                UnlocalizedNumberFormatter f =
+                    NumberFormatter.with().precision(
+                        Precision.increment(bdIncrement));
+                LocalizedNumberFormatter l = f.locale(locale);
+
+                String skeleton = f.toSkeleton();
+
+                String message = String.format(
+                    "ICU-21654: Precision::increment(%.5f).withMinFraction(%d) '%s'\n",
+                    increment, min_fraction_digits,
+                    skeleton);
+
+                if (increment == 0.05 && min_fraction_digits == 1) {
+                    // Special case when the number of fraction digits is too low:
+                    // Precision::increment(0.05000).withMinFraction(1) 'precision-increment/0.05'
+                    assertEquals(message, "precision-increment/0.05", skeleton);
+                } else {
+                    // All other cases: use the snprintf pattern computed above:
+                    // Precision::increment(0.50000).withMinFraction(1) 'precision-increment/0.5'
+                    // Precision::increment(5.00000).withMinFraction(1) 'precision-increment/5.0'
+                    // Precision::increment(50.00000).withMinFraction(1) 'precision-increment/50.0'
+                    // ...
+                    // Precision::increment(0.05000).withMinFraction(2) 'precision-increment/0.05'
+                    // Precision::increment(0.50000).withMinFraction(2) 'precision-increment/0.50'
+                    // Precision::increment(5.00000).withMinFraction(2) 'precision-increment/5.00'
+                    // ...
+
+                    String expected = String.format(pattern, increment);
+                    assertEquals(message, expected, skeleton);
+                }
+            }
+        }
+
+        String increment = NumberFormatter.with()
+            .precision(Precision.increment(new BigDecimal("5000")))
+            .roundingMode(RoundingMode.UP)
+            .locale(ULocale.ENGLISH)
+            .format(5.625)
+            .toString();
+        assertEquals("ICU-21668", "5,000", increment);
     }
 
     @Test
