@@ -1671,6 +1671,51 @@ public class NumberFormatterApiTest extends TestFmwk {
                 30500,
                 "350 m");
 
+        assertFormatSingle("Fuel consumption: inverted units",
+                           "unit/liter-per-100-kilometer usage/vehicle-fuel",
+                           "unit/liter-per-100-kilometer usage/vehicle-fuel",
+                           NumberFormatter.with()
+                               .unit(MeasureUnit.forIdentifier("liter-per-100-kilometer"))
+                               .usage("vehicle-fuel"),
+                           new ULocale("en-US"), //
+                           6.6,                  //
+                           "36 mpg");
+
+        // // TODO(ICU-21862): determine desired behaviour. Commented out for now
+        // // to not enforce undesirable behaviour
+        // assertFormatSingle("Fuel consumption: inverted units, divide-by-zero, en-US",
+        //                    "unit/liter-per-100-kilometer usage/vehicle-fuel",
+        //                    "unit/liter-per-100-kilometer usage/vehicle-fuel",
+        //                    NumberFormatter.with()
+        //                        .unit(MeasureUnit.forIdentifier("liter-per-100-kilometer"))
+        //                        .usage("vehicle-fuel"),
+        //                    new ULocale("en-US"), //
+        //                    0,                    //
+        //                    "0 mpg");
+
+        // // TODO(ICU-21862): determine desired behaviour. Commented out for now
+        // // to not enforce undesirable behaviour
+        // assertFormatSingle("Fuel consumption: inverted units, divide-by-zero, en-ZA",
+        //                    "unit/mile-per-gallon usage/vehicle-fuel",
+        //                    "unit/mile-per-gallon usage/vehicle-fuel",
+        //                    NumberFormatter.with()
+        //                        .unit(MeasureUnit.forIdentifier("mile-per-gallon"))
+        //                        .usage("vehicle-fuel"),
+        //                    new ULocale("en-ZA"), //
+        //                    0,                    //
+        //                    "0 mpg");
+
+        // // TODO(ICU-21862): Once we support Inf as input:
+        // assertFormatSingle("Fuel consumption: inverted units, divide-by-inf",
+        //                    "unit/mile-per-gallon usage/vehicle-fuel",
+        //                    "unit/mile-per-gallon usage/vehicle-fuel",
+        //                    NumberFormatter.with()
+        //                        .unit(MeasureUnit.forIdentifier("mile-per-gallon"))
+        //                        .usage("vehicle-fuel"),
+        //                    new ULocale("de-CH"), //
+        //                    INFINITY_GOES_HERE,   //
+        //                    "0 mpg");
+
         // Test calling .usage("") or .usage(null) should unset the existing usage.
         // First: without usage
         assertFormatSingle("Rounding Mode propagates: rounding up",
@@ -1790,10 +1835,6 @@ public class NumberFormatterApiTest extends TestFmwk {
                 new ULocale("en-US"),
                 1,
                 "0.019 psi");
-
-        // TODO(icu-units#38): improve unit testing coverage. E.g. add
-        // vehicle-fuel triggering inversion conversion code. Test with 0 too,
-        // to see divide-by-zero behaviour.
     }
 
     @Test

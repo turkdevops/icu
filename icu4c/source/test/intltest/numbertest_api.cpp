@@ -1747,6 +1747,46 @@ void NumberFormatterApiTest::unitUsage() {
             30500,
             u"350 m");
 
+    assertFormatSingle(u"Fuel consumption: inverted units",                                     //
+                       u"unit/liter-per-100-kilometer usage/vehicle-fuel",                      //
+                       u"unit/liter-per-100-kilometer usage/vehicle-fuel",                      //
+                       NumberFormatter::with()                                                  //
+                           .unit(MeasureUnit::forIdentifier("liter-per-100-kilometer", status)) //
+                           .usage("vehicle-fuel"),                                              //
+                       Locale("en-US"),                                                         //
+                       6.6,                                                                     //
+                       "36 mpg");
+
+    assertFormatSingle(u"Fuel consumption: inverted units, divide-by-zero, en-US",              //
+                       u"unit/liter-per-100-kilometer usage/vehicle-fuel",                      //
+                       u"unit/liter-per-100-kilometer usage/vehicle-fuel",                      //
+                       NumberFormatter::with()                                                  //
+                           .unit(MeasureUnit::forIdentifier("liter-per-100-kilometer", status)) //
+                           .usage("vehicle-fuel"),                                              //
+                       Locale("en-US"),                                                         //
+                       0,                                                                       //
+                       u"∞ mpg");
+
+    assertFormatSingle(u"Fuel consumption: inverted units, divide-by-zero, en-ZA",      //
+                       u"unit/mile-per-gallon usage/vehicle-fuel",                      //
+                       u"unit/mile-per-gallon usage/vehicle-fuel",                      //
+                       NumberFormatter::with()                                          //
+                           .unit(MeasureUnit::forIdentifier("mile-per-gallon", status)) //
+                           .usage("vehicle-fuel"),                                      //
+                       Locale("en-ZA"),                                                 //
+                       0,                                                               //
+                       u"∞ l/100 km");
+
+    assertFormatSingle(u"Fuel consumption: inverted units, divide-by-inf",              //
+                       u"unit/mile-per-gallon usage/vehicle-fuel",                      //
+                       u"unit/mile-per-gallon usage/vehicle-fuel",                      //
+                       NumberFormatter::with()                                          //
+                           .unit(MeasureUnit::forIdentifier("mile-per-gallon", status)) //
+                           .usage("vehicle-fuel"),                                      //
+                       Locale("de-CH"),                                                 //
+                       uprv_getInfinity(),                                              //
+                       u"0 L/100 km");
+
     // Test calling `.usage("")` should unset the existing usage.
     // First: without usage
     assertFormatSingle(u"Rounding Mode propagates: rounding up",
@@ -1853,10 +1893,6 @@ void NumberFormatterApiTest::unitUsage() {
                        Locale("en-US"),                                                 //
                        1,                                                               //
                        "0.019 psi");
-
-    // TODO(icu-units#38): improve unit testing coverage. E.g. add vehicle-fuel
-    // triggering inversion conversion code. Test with 0 too, to see
-    // divide-by-zero behaviour.
 }
 
 void NumberFormatterApiTest::unitUsageErrorCodes() {
