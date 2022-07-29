@@ -1229,7 +1229,6 @@ public:
      */
     UnicodeSet& retain(UChar32 c);
 
-#ifndef U_HIDE_DRAFT_API
     /**
      * Retains only the specified string from this set if it is present.
      * Upon return this set will be empty if it did not contain s, or
@@ -1238,10 +1237,9 @@ public:
      *
      * @param s the source string
      * @return this object, for chaining
-     * @draft ICU 69
+     * @stable ICU 69
      */
     UnicodeSet& retain(const UnicodeString &s);
-#endif  // U_HIDE_DRAFT_API
 
     /**
      * Removes the specified range from this set if it is present.
@@ -1680,8 +1678,6 @@ private:
                               UnicodeString& rebuiltPat,
                               UErrorCode& ec);
 
-    static const UnicodeSet* getInclusions(int32_t src, UErrorCode &status);
-
     /**
      * A filter that returns true if the given code point should be
      * included in the UnicodeSet being constructed.
@@ -1701,11 +1697,6 @@ private:
                      void* context,
                      const UnicodeSet* inclusions,
                      UErrorCode &status);
-
-    // UCPMap is now stable ICU 63
-    void applyIntPropertyValue(const UCPMap *map,
-                               UCPMapValueFilter *filter, const void *context,
-                               UErrorCode &errorCode);
 
     /**
      * Set the new pattern to cache.

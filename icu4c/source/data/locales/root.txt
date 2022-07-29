@@ -16,11 +16,32 @@ root{
     ExemplarCharactersPunctuation{"[\\- ‑ , ; \\: ! ? . ( ) \\[ \\] \\{ \\}]"}
     MoreInformation{"?"}
     NumberElements{
+        adlm{
+            miscPatterns:alias{"/LOCALE/NumberElements/latn/miscPatterns"}
+            patterns{
+                currencyFormat:alias{"/LOCALE/NumberElements/latn/patterns/currencyFormat"}
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patterns/decimalFormat"}
+                percentFormat:alias{"/LOCALE/NumberElements/latn/patterns/percentFormat"}
+                scientificFormat:alias{"/LOCALE/NumberElements/latn/patterns/scientificFormat"}
+            }
+            patternsShort{
+                currencyFormat:alias{"/LOCALE/NumberElements/latn/patternsShort/currencyFormat"}
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patternsShort/decimalFormat"}
+            }
+            symbols:alias{"/LOCALE/NumberElements/latn/symbols"}
+        }
         arab{
+            miscPatterns:alias{"/LOCALE/NumberElements/latn/miscPatterns"}
             patterns{
                 accountingFormat:alias{"/LOCALE/NumberElements/arab/patterns/currencyFormat"}
                 currencyFormat{"#,##0.00 ¤"}
+                currencyFormat%noCurrency{"#,##0.00"}
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patterns/decimalFormat"}
                 percentFormat{"#,##0%"}
+                scientificFormat:alias{"/LOCALE/NumberElements/latn/patterns/scientificFormat"}
+            }
+            patternsShort{
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patternsShort/decimalFormat"}
             }
             symbols{
                 approximatelySign{"~"}
@@ -39,6 +60,17 @@ root{
             }
         }
         arabext{
+            miscPatterns:alias{"/LOCALE/NumberElements/latn/miscPatterns"}
+            patterns{
+                currencyFormat:alias{"/LOCALE/NumberElements/latn/patterns/currencyFormat"}
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patterns/decimalFormat"}
+                percentFormat:alias{"/LOCALE/NumberElements/latn/patterns/percentFormat"}
+                scientificFormat:alias{"/LOCALE/NumberElements/latn/patterns/scientificFormat"}
+            }
+            patternsShort{
+                currencyFormat:alias{"/LOCALE/NumberElements/latn/patternsShort/currencyFormat"}
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patternsShort/decimalFormat"}
+            }
             symbols{
                 approximatelySign{"~"}
                 decimal{"٫"}
@@ -55,7 +87,276 @@ root{
                 timeSeparator{"٫"}
             }
         }
+        bali{
+            miscPatterns:alias{"/LOCALE/NumberElements/latn/miscPatterns"}
+            patterns{
+                currencyFormat:alias{"/LOCALE/NumberElements/latn/patterns/currencyFormat"}
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patterns/decimalFormat"}
+                percentFormat:alias{"/LOCALE/NumberElements/latn/patterns/percentFormat"}
+                scientificFormat:alias{"/LOCALE/NumberElements/latn/patterns/scientificFormat"}
+            }
+            patternsShort{
+                currencyFormat:alias{"/LOCALE/NumberElements/latn/patternsShort/currencyFormat"}
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patternsShort/decimalFormat"}
+            }
+            symbols:alias{"/LOCALE/NumberElements/latn/symbols"}
+        }
+        beng{
+            miscPatterns:alias{"/LOCALE/NumberElements/latn/miscPatterns"}
+            patterns{
+                currencyFormat:alias{"/LOCALE/NumberElements/latn/patterns/currencyFormat"}
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patterns/decimalFormat"}
+                percentFormat:alias{"/LOCALE/NumberElements/latn/patterns/percentFormat"}
+                scientificFormat:alias{"/LOCALE/NumberElements/latn/patterns/scientificFormat"}
+            }
+            patternsShort{
+                currencyFormat:alias{"/LOCALE/NumberElements/latn/patternsShort/currencyFormat"}
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patternsShort/decimalFormat"}
+            }
+            symbols:alias{"/LOCALE/NumberElements/latn/symbols"}
+        }
+        brah{
+            miscPatterns:alias{"/LOCALE/NumberElements/latn/miscPatterns"}
+            patterns{
+                currencyFormat:alias{"/LOCALE/NumberElements/latn/patterns/currencyFormat"}
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patterns/decimalFormat"}
+                percentFormat:alias{"/LOCALE/NumberElements/latn/patterns/percentFormat"}
+                scientificFormat:alias{"/LOCALE/NumberElements/latn/patterns/scientificFormat"}
+            }
+            patternsShort{
+                currencyFormat:alias{"/LOCALE/NumberElements/latn/patternsShort/currencyFormat"}
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patternsShort/decimalFormat"}
+            }
+            symbols:alias{"/LOCALE/NumberElements/latn/symbols"}
+        }
+        cakm{
+            miscPatterns:alias{"/LOCALE/NumberElements/latn/miscPatterns"}
+            patterns{
+                currencyFormat:alias{"/LOCALE/NumberElements/latn/patterns/currencyFormat"}
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patterns/decimalFormat"}
+                percentFormat:alias{"/LOCALE/NumberElements/latn/patterns/percentFormat"}
+                scientificFormat:alias{"/LOCALE/NumberElements/latn/patterns/scientificFormat"}
+            }
+            patternsShort{
+                currencyFormat:alias{"/LOCALE/NumberElements/latn/patternsShort/currencyFormat"}
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patternsShort/decimalFormat"}
+            }
+            symbols:alias{"/LOCALE/NumberElements/latn/symbols"}
+        }
+        cham{
+            miscPatterns:alias{"/LOCALE/NumberElements/latn/miscPatterns"}
+            patterns{
+                currencyFormat:alias{"/LOCALE/NumberElements/latn/patterns/currencyFormat"}
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patterns/decimalFormat"}
+                percentFormat:alias{"/LOCALE/NumberElements/latn/patterns/percentFormat"}
+                scientificFormat:alias{"/LOCALE/NumberElements/latn/patterns/scientificFormat"}
+            }
+            patternsShort{
+                currencyFormat:alias{"/LOCALE/NumberElements/latn/patternsShort/currencyFormat"}
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patternsShort/decimalFormat"}
+            }
+            symbols:alias{"/LOCALE/NumberElements/latn/symbols"}
+        }
         default{"latn"}
+        deva{
+            miscPatterns:alias{"/LOCALE/NumberElements/latn/miscPatterns"}
+            patterns{
+                currencyFormat:alias{"/LOCALE/NumberElements/latn/patterns/currencyFormat"}
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patterns/decimalFormat"}
+                percentFormat:alias{"/LOCALE/NumberElements/latn/patterns/percentFormat"}
+                scientificFormat:alias{"/LOCALE/NumberElements/latn/patterns/scientificFormat"}
+            }
+            patternsShort{
+                currencyFormat:alias{"/LOCALE/NumberElements/latn/patternsShort/currencyFormat"}
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patternsShort/decimalFormat"}
+            }
+            symbols:alias{"/LOCALE/NumberElements/latn/symbols"}
+        }
+        fullwide{
+            miscPatterns:alias{"/LOCALE/NumberElements/latn/miscPatterns"}
+            patterns{
+                currencyFormat:alias{"/LOCALE/NumberElements/latn/patterns/currencyFormat"}
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patterns/decimalFormat"}
+                percentFormat:alias{"/LOCALE/NumberElements/latn/patterns/percentFormat"}
+                scientificFormat:alias{"/LOCALE/NumberElements/latn/patterns/scientificFormat"}
+            }
+            patternsShort{
+                currencyFormat:alias{"/LOCALE/NumberElements/latn/patternsShort/currencyFormat"}
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patternsShort/decimalFormat"}
+            }
+            symbols:alias{"/LOCALE/NumberElements/latn/symbols"}
+        }
+        gong{
+            miscPatterns:alias{"/LOCALE/NumberElements/latn/miscPatterns"}
+            patterns{
+                currencyFormat:alias{"/LOCALE/NumberElements/latn/patterns/currencyFormat"}
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patterns/decimalFormat"}
+                percentFormat:alias{"/LOCALE/NumberElements/latn/patterns/percentFormat"}
+                scientificFormat:alias{"/LOCALE/NumberElements/latn/patterns/scientificFormat"}
+            }
+            patternsShort{
+                currencyFormat:alias{"/LOCALE/NumberElements/latn/patternsShort/currencyFormat"}
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patternsShort/decimalFormat"}
+            }
+            symbols:alias{"/LOCALE/NumberElements/latn/symbols"}
+        }
+        gonm{
+            miscPatterns:alias{"/LOCALE/NumberElements/latn/miscPatterns"}
+            patterns{
+                currencyFormat:alias{"/LOCALE/NumberElements/latn/patterns/currencyFormat"}
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patterns/decimalFormat"}
+                percentFormat:alias{"/LOCALE/NumberElements/latn/patterns/percentFormat"}
+                scientificFormat:alias{"/LOCALE/NumberElements/latn/patterns/scientificFormat"}
+            }
+            patternsShort{
+                currencyFormat:alias{"/LOCALE/NumberElements/latn/patternsShort/currencyFormat"}
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patternsShort/decimalFormat"}
+            }
+            symbols:alias{"/LOCALE/NumberElements/latn/symbols"}
+        }
+        gujr{
+            miscPatterns:alias{"/LOCALE/NumberElements/latn/miscPatterns"}
+            patterns{
+                currencyFormat:alias{"/LOCALE/NumberElements/latn/patterns/currencyFormat"}
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patterns/decimalFormat"}
+                percentFormat:alias{"/LOCALE/NumberElements/latn/patterns/percentFormat"}
+                scientificFormat:alias{"/LOCALE/NumberElements/latn/patterns/scientificFormat"}
+            }
+            patternsShort{
+                currencyFormat:alias{"/LOCALE/NumberElements/latn/patternsShort/currencyFormat"}
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patternsShort/decimalFormat"}
+            }
+            symbols:alias{"/LOCALE/NumberElements/latn/symbols"}
+        }
+        guru{
+            miscPatterns:alias{"/LOCALE/NumberElements/latn/miscPatterns"}
+            patterns{
+                currencyFormat:alias{"/LOCALE/NumberElements/latn/patterns/currencyFormat"}
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patterns/decimalFormat"}
+                percentFormat:alias{"/LOCALE/NumberElements/latn/patterns/percentFormat"}
+                scientificFormat:alias{"/LOCALE/NumberElements/latn/patterns/scientificFormat"}
+            }
+            patternsShort{
+                currencyFormat:alias{"/LOCALE/NumberElements/latn/patternsShort/currencyFormat"}
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patternsShort/decimalFormat"}
+            }
+            symbols:alias{"/LOCALE/NumberElements/latn/symbols"}
+        }
+        hanidec{
+            miscPatterns:alias{"/LOCALE/NumberElements/latn/miscPatterns"}
+            patterns{
+                currencyFormat:alias{"/LOCALE/NumberElements/latn/patterns/currencyFormat"}
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patterns/decimalFormat"}
+                percentFormat:alias{"/LOCALE/NumberElements/latn/patterns/percentFormat"}
+                scientificFormat:alias{"/LOCALE/NumberElements/latn/patterns/scientificFormat"}
+            }
+            patternsShort{
+                currencyFormat:alias{"/LOCALE/NumberElements/latn/patternsShort/currencyFormat"}
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patternsShort/decimalFormat"}
+            }
+            symbols:alias{"/LOCALE/NumberElements/latn/symbols"}
+        }
+        hmnp{
+            symbols:alias{"/LOCALE/NumberElements/latn/symbols"}
+        }
+        java{
+            miscPatterns:alias{"/LOCALE/NumberElements/latn/miscPatterns"}
+            patterns{
+                currencyFormat:alias{"/LOCALE/NumberElements/latn/patterns/currencyFormat"}
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patterns/decimalFormat"}
+                percentFormat:alias{"/LOCALE/NumberElements/latn/patterns/percentFormat"}
+                scientificFormat:alias{"/LOCALE/NumberElements/latn/patterns/scientificFormat"}
+            }
+            patternsShort{
+                currencyFormat:alias{"/LOCALE/NumberElements/latn/patternsShort/currencyFormat"}
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patternsShort/decimalFormat"}
+            }
+            symbols:alias{"/LOCALE/NumberElements/latn/symbols"}
+        }
+        kali{
+            miscPatterns:alias{"/LOCALE/NumberElements/latn/miscPatterns"}
+            patterns{
+                currencyFormat:alias{"/LOCALE/NumberElements/latn/patterns/currencyFormat"}
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patterns/decimalFormat"}
+                percentFormat:alias{"/LOCALE/NumberElements/latn/patterns/percentFormat"}
+                scientificFormat:alias{"/LOCALE/NumberElements/latn/patterns/scientificFormat"}
+            }
+            patternsShort{
+                currencyFormat:alias{"/LOCALE/NumberElements/latn/patternsShort/currencyFormat"}
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patternsShort/decimalFormat"}
+            }
+            symbols:alias{"/LOCALE/NumberElements/latn/symbols"}
+        }
+        khmr{
+            miscPatterns:alias{"/LOCALE/NumberElements/latn/miscPatterns"}
+            patterns{
+                currencyFormat:alias{"/LOCALE/NumberElements/latn/patterns/currencyFormat"}
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patterns/decimalFormat"}
+                percentFormat:alias{"/LOCALE/NumberElements/latn/patterns/percentFormat"}
+                scientificFormat:alias{"/LOCALE/NumberElements/latn/patterns/scientificFormat"}
+            }
+            patternsShort{
+                currencyFormat:alias{"/LOCALE/NumberElements/latn/patternsShort/currencyFormat"}
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patternsShort/decimalFormat"}
+            }
+            symbols:alias{"/LOCALE/NumberElements/latn/symbols"}
+        }
+        knda{
+            miscPatterns:alias{"/LOCALE/NumberElements/latn/miscPatterns"}
+            patterns{
+                currencyFormat:alias{"/LOCALE/NumberElements/latn/patterns/currencyFormat"}
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patterns/decimalFormat"}
+                percentFormat:alias{"/LOCALE/NumberElements/latn/patterns/percentFormat"}
+                scientificFormat:alias{"/LOCALE/NumberElements/latn/patterns/scientificFormat"}
+            }
+            patternsShort{
+                currencyFormat:alias{"/LOCALE/NumberElements/latn/patternsShort/currencyFormat"}
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patternsShort/decimalFormat"}
+            }
+            symbols:alias{"/LOCALE/NumberElements/latn/symbols"}
+        }
+        lana{
+            miscPatterns:alias{"/LOCALE/NumberElements/latn/miscPatterns"}
+            patterns{
+                currencyFormat:alias{"/LOCALE/NumberElements/latn/patterns/currencyFormat"}
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patterns/decimalFormat"}
+                percentFormat:alias{"/LOCALE/NumberElements/latn/patterns/percentFormat"}
+                scientificFormat:alias{"/LOCALE/NumberElements/latn/patterns/scientificFormat"}
+            }
+            patternsShort{
+                currencyFormat:alias{"/LOCALE/NumberElements/latn/patternsShort/currencyFormat"}
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patternsShort/decimalFormat"}
+            }
+            symbols:alias{"/LOCALE/NumberElements/latn/symbols"}
+        }
+        lanatham{
+            miscPatterns:alias{"/LOCALE/NumberElements/latn/miscPatterns"}
+            patterns{
+                currencyFormat:alias{"/LOCALE/NumberElements/latn/patterns/currencyFormat"}
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patterns/decimalFormat"}
+                percentFormat:alias{"/LOCALE/NumberElements/latn/patterns/percentFormat"}
+                scientificFormat:alias{"/LOCALE/NumberElements/latn/patterns/scientificFormat"}
+            }
+            patternsShort{
+                currencyFormat:alias{"/LOCALE/NumberElements/latn/patternsShort/currencyFormat"}
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patternsShort/decimalFormat"}
+            }
+            symbols:alias{"/LOCALE/NumberElements/latn/symbols"}
+        }
+        laoo{
+            miscPatterns:alias{"/LOCALE/NumberElements/latn/miscPatterns"}
+            patterns{
+                currencyFormat:alias{"/LOCALE/NumberElements/latn/patterns/currencyFormat"}
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patterns/decimalFormat"}
+                percentFormat:alias{"/LOCALE/NumberElements/latn/patterns/percentFormat"}
+                scientificFormat:alias{"/LOCALE/NumberElements/latn/patterns/scientificFormat"}
+            }
+            patternsShort{
+                currencyFormat:alias{"/LOCALE/NumberElements/latn/patternsShort/currencyFormat"}
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patternsShort/decimalFormat"}
+            }
+            symbols:alias{"/LOCALE/NumberElements/latn/symbols"}
+        }
         latn{
             miscPatterns{
                 approximately{"~{0}"}
@@ -66,6 +367,8 @@ root{
             patterns{
                 accountingFormat:alias{"/LOCALE/NumberElements/latn/patterns/currencyFormat"}
                 currencyFormat{"¤ #,##0.00"}
+                currencyFormat%noCurrency{"#,##0.00"}
+                currencyPatternAppendISO{"{0} ¤¤"}
                 decimalFormat{"#,##0.###"}
                 percentFormat{"#,##0%"}
                 scientificFormat{"#E0"}
@@ -164,6 +467,34 @@ root{
                 timeSeparator{":"}
             }
         }
+        lepc{
+            miscPatterns:alias{"/LOCALE/NumberElements/latn/miscPatterns"}
+            patterns{
+                currencyFormat:alias{"/LOCALE/NumberElements/latn/patterns/currencyFormat"}
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patterns/decimalFormat"}
+                percentFormat:alias{"/LOCALE/NumberElements/latn/patterns/percentFormat"}
+                scientificFormat:alias{"/LOCALE/NumberElements/latn/patterns/scientificFormat"}
+            }
+            patternsShort{
+                currencyFormat:alias{"/LOCALE/NumberElements/latn/patternsShort/currencyFormat"}
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patternsShort/decimalFormat"}
+            }
+            symbols:alias{"/LOCALE/NumberElements/latn/symbols"}
+        }
+        limb{
+            miscPatterns:alias{"/LOCALE/NumberElements/latn/miscPatterns"}
+            patterns{
+                currencyFormat:alias{"/LOCALE/NumberElements/latn/patterns/currencyFormat"}
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patterns/decimalFormat"}
+                percentFormat:alias{"/LOCALE/NumberElements/latn/patterns/percentFormat"}
+                scientificFormat:alias{"/LOCALE/NumberElements/latn/patterns/scientificFormat"}
+            }
+            patternsShort{
+                currencyFormat:alias{"/LOCALE/NumberElements/latn/patternsShort/currencyFormat"}
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patternsShort/decimalFormat"}
+            }
+            symbols:alias{"/LOCALE/NumberElements/latn/symbols"}
+        }
         minimalPairs{
             ordinal{
                 other{"{0}?"}
@@ -173,9 +504,303 @@ root{
             }
         }
         minimumGroupingDigits{"1"}
+        mlym{
+            miscPatterns:alias{"/LOCALE/NumberElements/latn/miscPatterns"}
+            patterns{
+                currencyFormat:alias{"/LOCALE/NumberElements/latn/patterns/currencyFormat"}
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patterns/decimalFormat"}
+                percentFormat:alias{"/LOCALE/NumberElements/latn/patterns/percentFormat"}
+                scientificFormat:alias{"/LOCALE/NumberElements/latn/patterns/scientificFormat"}
+            }
+            patternsShort{
+                currencyFormat:alias{"/LOCALE/NumberElements/latn/patternsShort/currencyFormat"}
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patternsShort/decimalFormat"}
+            }
+            symbols:alias{"/LOCALE/NumberElements/latn/symbols"}
+        }
+        mong{
+            miscPatterns:alias{"/LOCALE/NumberElements/latn/miscPatterns"}
+            patterns{
+                currencyFormat:alias{"/LOCALE/NumberElements/latn/patterns/currencyFormat"}
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patterns/decimalFormat"}
+                percentFormat:alias{"/LOCALE/NumberElements/latn/patterns/percentFormat"}
+                scientificFormat:alias{"/LOCALE/NumberElements/latn/patterns/scientificFormat"}
+            }
+            patternsShort{
+                currencyFormat:alias{"/LOCALE/NumberElements/latn/patternsShort/currencyFormat"}
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patternsShort/decimalFormat"}
+            }
+            symbols:alias{"/LOCALE/NumberElements/latn/symbols"}
+        }
+        mtei{
+            miscPatterns:alias{"/LOCALE/NumberElements/latn/miscPatterns"}
+            patterns{
+                currencyFormat:alias{"/LOCALE/NumberElements/latn/patterns/currencyFormat"}
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patterns/decimalFormat"}
+                percentFormat:alias{"/LOCALE/NumberElements/latn/patterns/percentFormat"}
+                scientificFormat:alias{"/LOCALE/NumberElements/latn/patterns/scientificFormat"}
+            }
+            patternsShort{
+                currencyFormat:alias{"/LOCALE/NumberElements/latn/patternsShort/currencyFormat"}
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patternsShort/decimalFormat"}
+            }
+            symbols:alias{"/LOCALE/NumberElements/latn/symbols"}
+        }
+        mymr{
+            miscPatterns:alias{"/LOCALE/NumberElements/latn/miscPatterns"}
+            patterns{
+                currencyFormat:alias{"/LOCALE/NumberElements/latn/patterns/currencyFormat"}
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patterns/decimalFormat"}
+                percentFormat:alias{"/LOCALE/NumberElements/latn/patterns/percentFormat"}
+                scientificFormat:alias{"/LOCALE/NumberElements/latn/patterns/scientificFormat"}
+            }
+            patternsShort{
+                currencyFormat:alias{"/LOCALE/NumberElements/latn/patternsShort/currencyFormat"}
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patternsShort/decimalFormat"}
+            }
+            symbols:alias{"/LOCALE/NumberElements/latn/symbols"}
+        }
+        mymrshan{
+            miscPatterns:alias{"/LOCALE/NumberElements/latn/miscPatterns"}
+            patterns{
+                currencyFormat:alias{"/LOCALE/NumberElements/latn/patterns/currencyFormat"}
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patterns/decimalFormat"}
+                percentFormat:alias{"/LOCALE/NumberElements/latn/patterns/percentFormat"}
+                scientificFormat:alias{"/LOCALE/NumberElements/latn/patterns/scientificFormat"}
+            }
+            patternsShort{
+                currencyFormat:alias{"/LOCALE/NumberElements/latn/patternsShort/currencyFormat"}
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patternsShort/decimalFormat"}
+            }
+            symbols:alias{"/LOCALE/NumberElements/latn/symbols"}
+        }
         native{"latn"}
+        nkoo{
+            miscPatterns:alias{"/LOCALE/NumberElements/latn/miscPatterns"}
+            patterns{
+                currencyFormat:alias{"/LOCALE/NumberElements/latn/patterns/currencyFormat"}
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patterns/decimalFormat"}
+                percentFormat:alias{"/LOCALE/NumberElements/latn/patterns/percentFormat"}
+                scientificFormat:alias{"/LOCALE/NumberElements/latn/patterns/scientificFormat"}
+            }
+            patternsShort{
+                currencyFormat:alias{"/LOCALE/NumberElements/latn/patternsShort/currencyFormat"}
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patternsShort/decimalFormat"}
+            }
+            symbols:alias{"/LOCALE/NumberElements/latn/symbols"}
+        }
+        olck{
+            miscPatterns:alias{"/LOCALE/NumberElements/latn/miscPatterns"}
+            patterns{
+                currencyFormat:alias{"/LOCALE/NumberElements/latn/patterns/currencyFormat"}
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patterns/decimalFormat"}
+                percentFormat:alias{"/LOCALE/NumberElements/latn/patterns/percentFormat"}
+                scientificFormat:alias{"/LOCALE/NumberElements/latn/patterns/scientificFormat"}
+            }
+            patternsShort{
+                currencyFormat:alias{"/LOCALE/NumberElements/latn/patternsShort/currencyFormat"}
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patternsShort/decimalFormat"}
+            }
+            symbols:alias{"/LOCALE/NumberElements/latn/symbols"}
+        }
+        orya{
+            miscPatterns:alias{"/LOCALE/NumberElements/latn/miscPatterns"}
+            patterns{
+                currencyFormat:alias{"/LOCALE/NumberElements/latn/patterns/currencyFormat"}
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patterns/decimalFormat"}
+                percentFormat:alias{"/LOCALE/NumberElements/latn/patterns/percentFormat"}
+                scientificFormat:alias{"/LOCALE/NumberElements/latn/patterns/scientificFormat"}
+            }
+            patternsShort{
+                currencyFormat:alias{"/LOCALE/NumberElements/latn/patternsShort/currencyFormat"}
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patternsShort/decimalFormat"}
+            }
+            symbols:alias{"/LOCALE/NumberElements/latn/symbols"}
+        }
+        osma{
+            miscPatterns:alias{"/LOCALE/NumberElements/latn/miscPatterns"}
+            patterns{
+                currencyFormat:alias{"/LOCALE/NumberElements/latn/patterns/currencyFormat"}
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patterns/decimalFormat"}
+                percentFormat:alias{"/LOCALE/NumberElements/latn/patterns/percentFormat"}
+                scientificFormat:alias{"/LOCALE/NumberElements/latn/patterns/scientificFormat"}
+            }
+            patternsShort{
+                currencyFormat:alias{"/LOCALE/NumberElements/latn/patternsShort/currencyFormat"}
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patternsShort/decimalFormat"}
+            }
+            symbols:alias{"/LOCALE/NumberElements/latn/symbols"}
+        }
+        rohg{
+            miscPatterns:alias{"/LOCALE/NumberElements/latn/miscPatterns"}
+            patterns{
+                currencyFormat:alias{"/LOCALE/NumberElements/latn/patterns/currencyFormat"}
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patterns/decimalFormat"}
+                percentFormat:alias{"/LOCALE/NumberElements/latn/patterns/percentFormat"}
+                scientificFormat:alias{"/LOCALE/NumberElements/latn/patterns/scientificFormat"}
+            }
+            patternsShort{
+                currencyFormat:alias{"/LOCALE/NumberElements/latn/patternsShort/currencyFormat"}
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patternsShort/decimalFormat"}
+            }
+            symbols:alias{"/LOCALE/NumberElements/latn/symbols"}
+        }
+        saur{
+            miscPatterns:alias{"/LOCALE/NumberElements/latn/miscPatterns"}
+            patterns{
+                currencyFormat:alias{"/LOCALE/NumberElements/latn/patterns/currencyFormat"}
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patterns/decimalFormat"}
+                percentFormat:alias{"/LOCALE/NumberElements/latn/patterns/percentFormat"}
+                scientificFormat:alias{"/LOCALE/NumberElements/latn/patterns/scientificFormat"}
+            }
+            patternsShort{
+                currencyFormat:alias{"/LOCALE/NumberElements/latn/patternsShort/currencyFormat"}
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patternsShort/decimalFormat"}
+            }
+            symbols:alias{"/LOCALE/NumberElements/latn/symbols"}
+        }
+        shrd{
+            miscPatterns:alias{"/LOCALE/NumberElements/latn/miscPatterns"}
+            patterns{
+                currencyFormat:alias{"/LOCALE/NumberElements/latn/patterns/currencyFormat"}
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patterns/decimalFormat"}
+                percentFormat:alias{"/LOCALE/NumberElements/latn/patterns/percentFormat"}
+                scientificFormat:alias{"/LOCALE/NumberElements/latn/patterns/scientificFormat"}
+            }
+            patternsShort{
+                currencyFormat:alias{"/LOCALE/NumberElements/latn/patternsShort/currencyFormat"}
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patternsShort/decimalFormat"}
+            }
+            symbols:alias{"/LOCALE/NumberElements/latn/symbols"}
+        }
+        sora{
+            miscPatterns:alias{"/LOCALE/NumberElements/latn/miscPatterns"}
+            patterns{
+                currencyFormat:alias{"/LOCALE/NumberElements/latn/patterns/currencyFormat"}
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patterns/decimalFormat"}
+                percentFormat:alias{"/LOCALE/NumberElements/latn/patterns/percentFormat"}
+                scientificFormat:alias{"/LOCALE/NumberElements/latn/patterns/scientificFormat"}
+            }
+            patternsShort{
+                currencyFormat:alias{"/LOCALE/NumberElements/latn/patternsShort/currencyFormat"}
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patternsShort/decimalFormat"}
+            }
+            symbols:alias{"/LOCALE/NumberElements/latn/symbols"}
+        }
+        sund{
+            miscPatterns:alias{"/LOCALE/NumberElements/latn/miscPatterns"}
+            patterns{
+                currencyFormat:alias{"/LOCALE/NumberElements/latn/patterns/currencyFormat"}
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patterns/decimalFormat"}
+                percentFormat:alias{"/LOCALE/NumberElements/latn/patterns/percentFormat"}
+                scientificFormat:alias{"/LOCALE/NumberElements/latn/patterns/scientificFormat"}
+            }
+            patternsShort{
+                currencyFormat:alias{"/LOCALE/NumberElements/latn/patternsShort/currencyFormat"}
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patternsShort/decimalFormat"}
+            }
+            symbols:alias{"/LOCALE/NumberElements/latn/symbols"}
+        }
+        takr{
+            miscPatterns:alias{"/LOCALE/NumberElements/latn/miscPatterns"}
+            patterns{
+                currencyFormat:alias{"/LOCALE/NumberElements/latn/patterns/currencyFormat"}
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patterns/decimalFormat"}
+                percentFormat:alias{"/LOCALE/NumberElements/latn/patterns/percentFormat"}
+                scientificFormat:alias{"/LOCALE/NumberElements/latn/patterns/scientificFormat"}
+            }
+            patternsShort{
+                currencyFormat:alias{"/LOCALE/NumberElements/latn/patternsShort/currencyFormat"}
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patternsShort/decimalFormat"}
+            }
+            symbols:alias{"/LOCALE/NumberElements/latn/symbols"}
+        }
+        talu{
+            miscPatterns:alias{"/LOCALE/NumberElements/latn/miscPatterns"}
+            patterns{
+                currencyFormat:alias{"/LOCALE/NumberElements/latn/patterns/currencyFormat"}
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patterns/decimalFormat"}
+                percentFormat:alias{"/LOCALE/NumberElements/latn/patterns/percentFormat"}
+                scientificFormat:alias{"/LOCALE/NumberElements/latn/patterns/scientificFormat"}
+            }
+            patternsShort{
+                currencyFormat:alias{"/LOCALE/NumberElements/latn/patternsShort/currencyFormat"}
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patternsShort/decimalFormat"}
+            }
+            symbols:alias{"/LOCALE/NumberElements/latn/symbols"}
+        }
+        tamldec{
+            miscPatterns:alias{"/LOCALE/NumberElements/latn/miscPatterns"}
+            patterns{
+                currencyFormat:alias{"/LOCALE/NumberElements/latn/patterns/currencyFormat"}
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patterns/decimalFormat"}
+                percentFormat:alias{"/LOCALE/NumberElements/latn/patterns/percentFormat"}
+                scientificFormat:alias{"/LOCALE/NumberElements/latn/patterns/scientificFormat"}
+            }
+            patternsShort{
+                currencyFormat:alias{"/LOCALE/NumberElements/latn/patternsShort/currencyFormat"}
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patternsShort/decimalFormat"}
+            }
+            symbols:alias{"/LOCALE/NumberElements/latn/symbols"}
+        }
+        telu{
+            miscPatterns:alias{"/LOCALE/NumberElements/latn/miscPatterns"}
+            patterns{
+                currencyFormat:alias{"/LOCALE/NumberElements/latn/patterns/currencyFormat"}
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patterns/decimalFormat"}
+                percentFormat:alias{"/LOCALE/NumberElements/latn/patterns/percentFormat"}
+                scientificFormat:alias{"/LOCALE/NumberElements/latn/patterns/scientificFormat"}
+            }
+            patternsShort{
+                currencyFormat:alias{"/LOCALE/NumberElements/latn/patternsShort/currencyFormat"}
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patternsShort/decimalFormat"}
+            }
+            symbols:alias{"/LOCALE/NumberElements/latn/symbols"}
+        }
+        thai{
+            miscPatterns:alias{"/LOCALE/NumberElements/latn/miscPatterns"}
+            patterns{
+                currencyFormat:alias{"/LOCALE/NumberElements/latn/patterns/currencyFormat"}
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patterns/decimalFormat"}
+                percentFormat:alias{"/LOCALE/NumberElements/latn/patterns/percentFormat"}
+                scientificFormat:alias{"/LOCALE/NumberElements/latn/patterns/scientificFormat"}
+            }
+            patternsShort{
+                currencyFormat:alias{"/LOCALE/NumberElements/latn/patternsShort/currencyFormat"}
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patternsShort/decimalFormat"}
+            }
+            symbols:alias{"/LOCALE/NumberElements/latn/symbols"}
+        }
+        tibt{
+            miscPatterns:alias{"/LOCALE/NumberElements/latn/miscPatterns"}
+            patterns{
+                currencyFormat:alias{"/LOCALE/NumberElements/latn/patterns/currencyFormat"}
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patterns/decimalFormat"}
+                percentFormat:alias{"/LOCALE/NumberElements/latn/patterns/percentFormat"}
+                scientificFormat:alias{"/LOCALE/NumberElements/latn/patterns/scientificFormat"}
+            }
+            patternsShort{
+                currencyFormat:alias{"/LOCALE/NumberElements/latn/patternsShort/currencyFormat"}
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patternsShort/decimalFormat"}
+            }
+            symbols:alias{"/LOCALE/NumberElements/latn/symbols"}
+        }
+        vaii{
+            miscPatterns:alias{"/LOCALE/NumberElements/latn/miscPatterns"}
+            patterns{
+                currencyFormat:alias{"/LOCALE/NumberElements/latn/patterns/currencyFormat"}
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patterns/decimalFormat"}
+                percentFormat:alias{"/LOCALE/NumberElements/latn/patterns/percentFormat"}
+                scientificFormat:alias{"/LOCALE/NumberElements/latn/patterns/scientificFormat"}
+            }
+            patternsShort{
+                currencyFormat:alias{"/LOCALE/NumberElements/latn/patternsShort/currencyFormat"}
+                decimalFormat:alias{"/LOCALE/NumberElements/latn/patternsShort/decimalFormat"}
+            }
+            symbols:alias{"/LOCALE/NumberElements/latn/symbols"}
+        }
     }
-    Version{"40"}
+    Version{"42"}
     calendar{
         buddhist{
             AmPmMarkers:alias{"/LOCALE/calendar/gregorian/AmPmMarkers"}
@@ -476,7 +1101,7 @@ root{
                 d{
                     d{"d–d"}
                 }
-                fallback{"{0} – {1}"}
+                fallback{"{0} – {1}"}
                 h{
                     a{"h a – h a"}
                     h{"h–h a"}
@@ -931,7 +1556,7 @@ root{
                 d{
                     d{"d–d"}
                 }
-                fallback{"{0} – {1}"}
+                fallback{"{0} – {1}"}
                 h{
                     a{"h a – h a"}
                     h{"h–h a"}
@@ -1249,7 +1874,7 @@ root{
                 d{
                     d{"d–d"}
                 }
-                fallback{"{0} – {1}"}
+                fallback{"{0} – {1}"}
                 h{
                     a{"h a – h a"}
                     h{"h–h a"}
@@ -2665,6 +3290,61 @@ root{
             stricter{
                 "[,٫⹁︐﹐，]",
                 "[.․﹒．｡]",
+            }
+        }
+    }
+    personNames{
+        foreignSpaceReplacement{" "}
+        initialPattern{
+            initial{"{0}."}
+            initialSequence{"{0} {1}"}
+        }
+        nameOrderLocales{
+            givenFirst{"und"}
+            surnameFirst{
+                "hu",
+                "ja",
+                "ko",
+                "vi",
+                "yue",
+                "zh",
+            }
+        }
+        namePattern{
+            givenFirst-long-monogram-formal{
+                "{given-monogram-allCaps}{given2-monogram-allCaps}{surname-monogram-a"
+                "llCaps}"
+            }
+            givenFirst-long-referring-formal{"{prefix} {given} {given2} {surname} {surname2} {suffix}"}
+            sorting-long-referring-formal{"{surname} {surname2}, {prefix} {given} {given2} {suffix}"}
+            surnameFirst-long-monogram-formal{
+                "{surname-monogram-allCaps}{given-monogram-allCaps}{given2-monogram-a"
+                "llCaps}"
+            }
+            surnameFirst-long-referring-formal{"{surname} {surname2} {prefix} {given} {given2} {suffix}"}
+        }
+        sampleName{
+            full{
+                given{"∅∅∅"}
+                given-informal{"∅∅∅"}
+                given2{"∅∅∅"}
+                prefix{"∅∅∅"}
+                suffix{"∅∅∅"}
+                surname-core{"∅∅∅"}
+                surname-prefix{"∅∅∅"}
+                surname2{"∅∅∅"}
+            }
+            given12Surname{
+                given{"∅∅∅"}
+                given2{"∅∅∅"}
+                surname{"∅∅∅"}
+            }
+            givenOnly{
+                given{"∅∅∅"}
+            }
+            givenSurnameOnly{
+                given{"∅∅∅"}
+                surname{"∅∅∅"}
             }
         }
     }

@@ -252,6 +252,7 @@ void NumberFormatTest::runIndexedTest( int32_t index, UBool exec, const char* &n
   TESTCASE_AUTO(Test21232_ParseTimeout);
   TESTCASE_AUTO(Test10997_FormatCurrency);
   TESTCASE_AUTO(Test21556_CurrencyAsDecimal);
+  TESTCASE_AUTO(Test22088_Ethiopic);
   TESTCASE_AUTO_END;
 }
 
@@ -3357,6 +3358,7 @@ void NumberFormatTest::TestRoundingPattern() {
 
 void NumberFormatTest::checkRounding(DecimalFormat* df, double base, int iterations, double increment) {
     df->setRoundingIncrement(increment);
+    assertEquals("Rounding increment round-trip", increment, df->getRoundingIncrement());
     double lastParsed=INT32_MIN; //Intger.MIN_VALUE
     for (int i=-iterations; i<=iterations;i++) {
         double iValue=base+(increment*(i*0.1));
@@ -4889,9 +4891,9 @@ NumberFormatTest::TestParseCurrencyInUCurr() {
         "Peruvian soles1.00",
         "Peruvian sol (1863\\u20131965)1.00",
         "Peruvian soles (1863\\u20131965)1.00",
-        "Philippine Piso1.00",
-        "Philippine piso1.00",
-        "Philippine pisos1.00",
+        "Philippine Peso1.00",
+        "Philippine peso1.00",
+        "Philippine pesos1.00",
         "Platinum1.00",
         "Platinum1.00",
         "Polish Zloty (1950\\u20131995)1.00",
@@ -4908,9 +4910,9 @@ NumberFormatTest::TestParseCurrencyInUCurr() {
         "Portuguese escudos1.00",
         "GTQ1.00",
         "QAR1.00",
-        "Qatari Rial1.00",
-        "Qatari rial1.00",
-        "Qatari rials1.00",
+        "Qatari Riyal1.00",
+        "Qatari riyal1.00",
+        "Qatari riyals1.00",
         "RHD1.00",
         "RHD1.00",
         "RINET Funds1.00",
@@ -5826,9 +5828,9 @@ NumberFormatTest::TestParseCurrencyInUCurr() {
         "1.00 Peruvian soles random",
         "1.00 Peruvian sol (1863\\u20131965) random",
         "1.00 Peruvian soles (1863\\u20131965) random",
-        "1.00 Philippine Piso random",
-        "1.00 Philippine piso random",
-        "1.00 Philippine pisos random",
+        "1.00 Philippine Peso random",
+        "1.00 Philippine peso random",
+        "1.00 Philippine pesos random",
         "1.00 Platinum random",
         "1.00 Platinum random",
         "1.00 Polish Zloty (1950\\u20131995) random",
@@ -5843,9 +5845,9 @@ NumberFormatTest::TestParseCurrencyInUCurr() {
         "1.00 Portuguese Guinea escudos random",
         "1.00 Portuguese escudo random",
         "1.00 Portuguese escudos random",
-        "1.00 Qatari Rial random",
-        "1.00 Qatari rial random",
-        "1.00 Qatari rials random",
+        "1.00 Qatari Riyal random",
+        "1.00 Qatari riyal random",
+        "1.00 Qatari riyals random",
         "1.00 RINET Funds random",
         "1.00 RINET Funds random",
         "1.00 Rhodesian Dollar random",
@@ -6437,7 +6439,7 @@ NumberFormatTest::TestParseCurrencyInUCurr() {
         "Portuguese Guinea Escud1.00",
         "Pr1.00",
         "QA1.00",
-        "Qatari Ria1.00",
+        "Qatari Riya1.00",
         "RD1.00",
         "RH1.00",
         "RINET Fund1.00",
@@ -10141,6 +10143,22 @@ void NumberFormatTest::Test21556_CurrencyAsDecimal() {
         assertEquals("Via applyPattern: toPattern", u"a0¤00b", df->toPattern(pattern));
         assertEquals("Via applyPattern: field position begin", 2, fp.getBeginIndex());
         assertEquals("Via applyPattern: field position end", 3, fp.getEndIndex());
+    }
+}
+
+void NumberFormatTest::Test22088_Ethiopic() {
+    IcuTestErrorCode err(*this, "Test22088_Ethiopic");
+    LocalPointer<NumberFormat> nf1(NumberFormat::createInstance(Locale("am_ET@numbers=ethi"), UNUM_DEFAULT, err));
+    LocalPointer<NumberFormat> nf2(NumberFormat::createInstance(Locale("am_ET@numbers=ethi"), UNUM_NUMBERING_SYSTEM, err));
+    LocalPointer<NumberFormat> nf3(NumberFormat::createInstance(Locale::getUS(), UNUM_NUMBERING_SYSTEM, err));
+    
+    if (!err.errIfFailureAndReset("Creation of number formatters failed")) {
+        UnicodeString result;
+        assertEquals("Wrong result with UNUM_DEFAULT", u"፻፳፫", nf1->format(123, result));
+        result.remove();
+        assertEquals("Wrong result with UNUM_NUMBERING_SYSTEM", u"፻፳፫", nf2->format(123, result));
+        result.remove();
+        assertEquals("Wrong result with UNUM_NUMBERING_SYSTEM and English", u"123", nf3->format(123, result));
     }
 }
 

@@ -1061,8 +1061,10 @@ CjkBreakEngine::CjkBreakEngine(DictionaryMatcher *adoptDictionary, LanguageType 
     // Korean dictionary only includes Hangul syllables
     fHangulWordSet.applyPattern(UnicodeString(u"[\\uac00-\\ud7a3]"), status);
     fHangulWordSet.compact();
-    fNumberOrOpenPunctuationSet.applyPattern(UnicodeString(u"[[:Nd:][:Pi:][:Ps:]]"), status);
-    fNumberOrOpenPunctuationSet.compact();
+    // Digits, open puncutation and Alphabetic characters.
+    fDigitOrOpenPunctuationOrAlphabetSet.applyPattern(
+        UnicodeString(u"[[:Nd:][:Pi:][:Ps:][:Alphabetic:]]"), status);
+    fDigitOrOpenPunctuationOrAlphabetSet.compact();
     fClosePunctuationSet.applyPattern(UnicodeString(u"[[:Pc:][:Pd:][:Pe:][:Pf:][:Po:]]"), status);
     fClosePunctuationSet.compact();
 
@@ -1360,14 +1362,19 @@ CjkBreakEngine::divideUpDictionaryRange( UText *inText,
             int32_t prevIdx = numCodePts;
 
             int32_t codeUnitIdx = -1;
+            int32_t prevCodeUnitIdx = -1;
             int32_t length = -1;
             for (int32_t i = prev.elementAti(numCodePts); i > 0; i = prev.elementAti(i)) {
                 codeUnitIdx = inString.moveIndex32(0, i);
+                prevCodeUnitIdx = inString.moveIndex32(0, prevIdx);
                 // Calculate the length by using the code unit.
-                length = inString.moveIndex32(0, prevIdx) - codeUnitIdx;
+                length = prevCodeUnitIdx - codeUnitIdx;
                 prevIdx = i;
-                // Skip the breakpoint if it belongs to the particle or Hiragana.
-                if (!fSkipSet.containsKey(inString.tempSubString(codeUnitIdx, length))) {
+                // Keep the breakpoint if the pattern is not in the fSkipSet and continuous Katakana
+                // characters don't occur.
+                if (!fSkipSet.containsKey(inString.tempSubString(codeUnitIdx, length))
+                    && (!isKatakana(inString.char32At(inString.moveIndex32(codeUnitIdx, -1)))
+                           || !isKatakana(inString.char32At(codeUnitIdx)))) {
                     t_boundary.addElement(i, status);
                     numBreaks++;
                 }
@@ -1427,9 +1434,10 @@ CjkBreakEngine::divideUpDictionaryRange( UText *inText,
         // In phrase breaking, there has to be a breakpoint between Cj character and
         // the number/open punctuation.
         // E.g. る文字「そうだ、京都」->る▁文字▁「そうだ、▁京都」-> breakpoint between 字 and「
-        // E.g. 乗車率９０％程度だろうか -> 乗車▁率▁９０％▁程度だ▁ろうか -> breakpoint between 率 and ９
+        // E.g. 乗車率９０％程度だろうか -> 乗車▁率▁９０％▁程度だろうか -> breakpoint between 率 and ９
+        // E.g. しかもロゴがＵｎｉｃｏｄｅ！ -> しかも▁ロゴが▁Ｕｎｉｃｏｄｅ！-> breakpoint between が and Ｕ
         if (isPhraseBreaking) {
-            if (!fNumberOrOpenPunctuationSet.contains(nextChar)) {
+            if (!fDigitOrOpenPunctuationOrAlphabetSet.contains(nextChar)) {
                 foundBreaks.popi();
                 correctedNumBreaks--;
             }
@@ -1445,19 +1453,17 @@ CjkBreakEngine::divideUpDictionaryRange( UText *inText,
 }
 
 void CjkBreakEngine::initJapanesePhraseParameter(UErrorCode& error) {
-    loadJapaneseParticleAndAuxVerbs(error);
+    loadJapaneseExtensions(error);
     loadHiragana(error);
 }
 
-void CjkBreakEngine::loadJapaneseParticleAndAuxVerbs(UErrorCode& error) {
-    const char* tags[2] = { "particles", "auxVerbs" };
+void CjkBreakEngine::loadJapaneseExtensions(UErrorCode& error) {
+    const char* tag = "extensions";
     ResourceBundle ja(U_ICUDATA_BRKITR, "ja", error);
     if (U_SUCCESS(error)) {
-        for (int32_t i = 0; i < 2; i++) {
-            ResourceBundle bundle = ja.get(tags[i], error);
-            while (U_SUCCESS(error) && bundle.hasNext()) {
-                fSkipSet.puti(bundle.getNextString(error), 1, error);
-            }
+        ResourceBundle bundle = ja.get(tag, error);
+        while (U_SUCCESS(error) && bundle.hasNext()) {
+            fSkipSet.puti(bundle.getNextString(error), 1, error);
         }
     }
 }
