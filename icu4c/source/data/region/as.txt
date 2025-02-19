@@ -1,6 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
 // License & terms of use: http://www.unicode.org/copyright.html
-// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
+// Generated using tools/cldr/cldr-to-icu/
 as{
     Countries{
         001{"বিশ্ব"}
@@ -267,7 +267,7 @@ as{
         TM{"তুৰ্কমেনিস্তান"}
         TN{"টুনিচিয়া"}
         TO{"টংগা"}
-        TR{"তুৰ্কি"}
+        TR{"তুৰ্কিয়ে"}
         TT{"ট্ৰিনিডাড আৰু টোবাগো"}
         TV{"টুভালু"}
         TW{"টাইৱান"}
