@@ -1787,12 +1787,22 @@ public class UnicodeSetTest extends CoreTestFmwk {
         // Multiple test cases can be set up here.  Each test case
         // is terminated by null:
         // var, value, var, value,..., input pat., exp. output pat., null
+        // spotless:off
         String DATA[] = {
             "us", "[a-z]", "[0-1$us]", "[0-1[a-z]]", null,
             // Variables do not expand inside string literals.
             "us", "[a-z]", "[$us{$us}]", "[a-z{\\$us}]", null,
+            // Variables are their own lexical elements added to the syntax; their values are not
+            // subject to the lexical separation constraints (this is not macro replacement
+            // anymore).
+            "colon", ":", "[$colon]", "[\\:]", null,
+            "dbff", "\uDBFF", "dfff", "\uDFFF", "[$dbff$dfff]", "[\\uDFFF\\uDBFF]", null,
+            "DBFF", "\\uDBFF", "DFFF", "\\uDFFF", "[$DBFF$DFFF]", "[\\uDFFF\\uDBFF]", null,
+            "nul", "\\00", "seven", "7", "[$nul$seven]", "[\\u00007]", null,
+            "cr", "\\xD", "F", "F", "[$cr$F]", "[\\u000DF]", null,
             "privateUse", "[[:Co:]]", "$privateUse", "[[:Co:]]", null,
         };
+        // spotless:on
 
         for (int i = 0; i < DATA.length; ++i) {
             TokenSymbolTable sym = new TokenSymbolTable();
@@ -4318,6 +4328,36 @@ public class UnicodeSetTest extends CoreTestFmwk {
                     new TestCase("[{\\N{Hangul syllable YA}\\N{Hangul syllable ONG}}]", "[{야옹}]"),
                     new TestCase("[{\\N{Hangul-syllable-y-a}\\N{Hangul-syllable-o-ng}}]", "[{야옹}]"),
                     */
+                    new TestCase("[\\xDF]", "[ß]"),
+                    new TestCase("[\\xDFF]", "[Fß]"),
+                    new TestCase("[\\xD F]", "[\\u000DF]"),
+                    new TestCase("[\\0007]", "[\\u00007]"),
+                    new TestCase("[\\007]", "[\\u0007]"),
+                    new TestCase("[\\00 7]", "[\\u00007]"),
+                    new TestCase("[\\0 07]", "[\\u000007]"),
+                    new TestCase("[\\ 007]", "[\\ 07]"),
+                    new TestCase("[\\800]", "[08]"),
+                    new TestCase("[\\0008]", "[\\u00008]"),
+                    new TestCase("[\\008]", "[\\u00008]"),
+                    new TestCase("[\\08]", "[\\u00008]"),
+                    new TestCase("[\\8]", "[8]"),
+                    new TestCase("[\\007F]", "[\\u0007F]"),
+                    new TestCase("[\\07F]", "[\\u0007F]"),
+                    new TestCase("[\\7F]", "[\\u0007F]"),
+                    new TestCase("[\\u200E007]", "[07\\u200E]"),
+                    new TestCase("[ :Greek:]", "[\\:Gekr]"),
+                    new TestCase("[\\uDBFF \\uDFFF]", "[\\uDFFF\\uDBFF]"),
+                    // ICU-2906, ICU extension to UnicodeSet.
+                    new TestCase("[\\uDBFF\\uDFFF]", "[\\U0010FFFF]"),
+                    // Nonportable ICU4J-only extension.
+                    // ICU4J interprets those like [\uDBFF\uDFFF], as [\U0010FFFF].  ICU4C < 79
+                    // interpreted them as [\uDBFF \uDFFF], because the sequence of two escapes is
+                    // longer than MAX_U_NOTATION_LEN defined in ruleiter.cpp.  They became
+                    // ill-formed in ICU4C 79 because of the requirement to separate
+                    // escaped-elements for lead and trail surrogates.
+                    // TODO(egg): Propose making them ill-formed in ICU4J too.
+                    new TestCase("[\\x{DBFF}\\x{DFFF}]", "[\\U0010FFFF]"),
+                    new TestCase("[\\U0000DBFF\\U0000DFFF]", "[\\U0010FFFF]"),
                 }) {
             final var set = new UnicodeSet(testCase.expression);
             final String actual = set.toPattern(false);
@@ -4396,7 +4436,7 @@ public class UnicodeSetTest extends CoreTestFmwk {
                         "[{\\N{LATIN CAPITAL LETTER Z}]",
                         "String literal was not terminated: {\\N{LATIN CAPITAL LETTER Z}] [{\\N{LATIN CAPITAL LETTER Z}]☜"
                     },
-                    // These three were well-formed in ICU 78 and earlier.
+                    // These four were well-formed in ICU 78 and earlier.
                     {"[{\\Normandie}]", "Ill-formed named-element [{\\No☜rmandie}]"},
                     {
                         "[{\\Picardie}]",
@@ -4405,6 +4445,10 @@ public class UnicodeSetTest extends CoreTestFmwk {
                     {
                         "[{Provence-Al\\pes-Côte d'Azur}]",
                         "Invalid escape sequence \\p in UnicodeSet string [{Provence-Al\\p☜es-Côte d'Azur}]"
+                    },
+                    {
+                        "[{\\\u200E}]",
+                        "Invalid escape sequence \\<U+200E> in UnicodeSet string [{\\‎☜}]"
                     },
                     // This was a well-formed set in ICU 78 and earlier; now it must be enclosed in
                     // square
@@ -4431,6 +4475,32 @@ public class UnicodeSetTest extends CoreTestFmwk {
                     {
                         "[ { \\x5A e i c h e n k e t t e } [] \\x5Aeichenmenge ]",
                         "Unescaped Pattern_White_Space in UnicodeSet string literals is prohibited until ICU 81.  Escape U+0020. [ { ☜\\x5A e i c h e n k e t t e } [] \\x5Aeichenmenge ]"
+                    },
+                    // ICU-23497 Implicit Directional Marks should not separate UnicodeSet lexical
+                    // elements.
+                    {
+                        "[\\xD\u200EF]",
+                        "white-space other than ignorable-format-control is required between escaped-element \\xD and literal-element F [\\xD☜‎F]"
+                    },
+                    {
+                        "[\\00\u200E7]",
+                        "white-space other than ignorable-format-control is required between escaped-element \\00 and literal-element 7 [\\00☜‎7]"
+                    },
+                    {
+                        "[\\0\u200E07]",
+                        "white-space other than ignorable-format-control is required between escaped-element \\0 and literal-element 0 [\\0☜‎07]"
+                    },
+                    {
+                        "[\\uDBFF\u200E\\uDFFF]",
+                        "white-space other than ignorable-format-control is required between escaped-elements representing high and low surrogates [\\uDBFF☜‎\\uDFFF]"
+                    },
+                    {
+                        "[\\x{DBFF}\u200E\\U0000DFFF]",
+                        "white-space other than ignorable-format-control is required between escaped-elements representing high and low surrogates [\\x{DBFF}☜‎\\U0000DFFF]"
+                    },
+                    {
+                        "[\u200E:Greek:]",
+                        "white-space other than ignorable-format-control is required between set-operator [ and literal-element : [☜‎:Greek:]"
                     },
                 }) {
             final String expression = testCase[0];

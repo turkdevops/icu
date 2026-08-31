@@ -1794,6 +1794,15 @@ void UnicodeSetTest::TestSymbolTable() {
         "us", "[a-z]", "[0-1$us]", "[0-1[a-z]]", nullptr,
         // Variables do not expand inside string literals.
         "us", "[a-z]", "[$us{$us}]", R"([a-z{\$us}])", nullptr,
+        // Variables are their own lexical elements added to the syntax; their
+        // values are not subject to the lexical separation constraints (this is
+        // not macro replacement anymore).
+        "colon", ":", "[$colon]", R"([\:])", nullptr,
+        "DBFF", R"(\uDBFF)",
+        "DFFF", R"(\uDFFF)",
+                "[$DBFF$DFFF]", R"([\uDFFF\uDBFF])", nullptr,
+        "nul", R"(\00)", "seven", "7", "[$nul$seven]", R"([\u00007])", nullptr,
+        "cr", R"(\xD)", "F", "F", "[$cr$F]", R"([\u000DF])", nullptr,
         "privateUse", "[[:Co:]]", "$privateUse", "[[:Co:]]", nullptr,
         nullptr
     };
@@ -4735,6 +4744,27 @@ void UnicodeSetTest::TestToPatternOutput() {
             {uR"([\N{CJK unified ideograph 5-5-b-5}])", u"[喵]"},
             {uR"([{\N{Hangul syllable YA}\N{Hangul syllable ONG}}])", u"[{야옹}]"},
             {uR"([{\N{Hangul-syllable-y-a}\N{Hangul-syllable-o-ng}}])", u"[{야옹}]"},
+            {uR"([\xDF])", u"[ß]"},
+            {uR"([\xDFF])", u"[Fß]"},
+            {uR"([\xD F])", uR"([\u000DF])"},
+            {uR"([\0007])", uR"([\u00007])"},
+            {uR"([\007])", uR"([\u0007])"},
+            {uR"([\00 7])", uR"([\u00007])"},
+            {uR"([\0 07])", uR"([\u000007])"},
+            {uR"([\ 007])", uR"([\ 07])"},
+            {uR"([\800])", uR"([08])"},
+            {uR"([\0008])", uR"([\u00008])"},
+            {uR"([\008])", uR"([\u00008])"},
+            {uR"([\08])", uR"([\u00008])"},
+            {uR"([\8])", uR"([8])"},
+            {uR"([\007F])", uR"([\u0007F])"},
+            {uR"([\07F])", uR"([\u0007F])"},
+            {uR"([\7F])", uR"([\u0007F])"},
+            {uR"([\u200E007])", uR"([07\u200E])"},
+            {uR"([ :Greek:])", uR"([\:Gekr])"},
+            {uR"([\uDBFF \uDFFF])", uR"([\uDFFF\uDBFF])"},
+            // ICU-2906, ICU extension to UnicodeSet.
+            {uR"([\uDBFF\uDFFF])", uR"([\U0010FFFF])"},
         }) {
         UErrorCode errorCode = U_ZERO_ERROR;
         const UnicodeSet set(expression, errorCode);
@@ -4752,6 +4782,8 @@ void UnicodeSetTest::TestParseErrors() {
     for (const auto expression : std::vector<std::u16string_view>{
             uR"([\u])",
             uR"([\x{}])",
+            // ICU-23497: the ignorable-format-control characters are not escapable-characters.
+            u"[\\\u200E007]",
         }) {
         UErrorCode errorCode = U_ZERO_ERROR;
         const UnicodeSet set(expression, errorCode);
@@ -4797,10 +4829,11 @@ void UnicodeSetTest::TestParseErrors() {
             // This was a well-formed string in ICU 78 and earlier, with the value
             // "N{LATINCAPITALLETTERZ".
             uR"([{\N{LATIN CAPITAL LETTER Z}])",
-            // These three were well-formed in ICU 78 and earlier.
+            // These four were well-formed in ICU 78 and earlier.
             uR"([{\Normandie}])",
             uR"([{\Picardie}])",
             uR"([{Provence-Al\pes-Côte d'Azur}])",
+            u"[{\\\u200E}]",
             // This was a well-formed set in ICU 78 and earlier; now it must be enclosed in square
             // brackets.
             uR"(\N{ latin small letter a })",
@@ -4811,6 +4844,20 @@ void UnicodeSetTest::TestParseErrors() {
             uR"([ { \x5A e i c h e n k e t t e } \x5Aeichenmenge ])",
             u"[ { Z e i c h e n k e t t e } [] Zeichenmenge ]",
             uR"([ { \x5A e i c h e n k e t t e } [] \x5Aeichenmenge ])",
+            // ICU-23497 Implicit Directional Marks should not separate UnicodeSet lexical elements.
+            u"[\\xD\u200EF]",
+            u"[\\00\u200E7]",
+            u"[\\0\u200E07]",
+            u"[\\uDBFF\u200E\\uDFFF]",
+            u"[\\x{DBFF}\u200E\\U0000DFFF]",
+            u"[\u200E:Greek:]",
+            // ICU4J interprets those like [\uDBFF\uDFFF], as [\U0010FFFF].  ICU4C < 79 interpreted
+            // them as [\uDBFF \uDFFF], because the sequence of two escapes is longer than
+            // MAX_U_NOTATION_LEN defined in ruleiter.cpp.  They were thus never portable; they
+            // become ill-formed in ICU4C 79 because of the requirement to separate escaped-elements
+            // for lead and trail surrogates.
+            uR"([\x{DBFF}\x{DFFF}])",
+            uR"([\U0000DBFF\U0000DFFF])",
         }) {
         UErrorCode errorCode = U_ZERO_ERROR;
         const UnicodeSet set(expression, errorCode);

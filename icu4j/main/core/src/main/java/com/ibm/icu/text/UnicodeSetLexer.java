@@ -5,6 +5,7 @@ package com.ibm.icu.text;
 import com.ibm.icu.impl.PatternProps;
 import com.ibm.icu.impl.RuleCharacterIterator;
 import com.ibm.icu.impl.Utility;
+import com.ibm.icu.lang.UCharacter;
 import com.ibm.icu.text.UnicodeSet.XSymbolTable;
 import com.ibm.icu.util.VersionInfo;
 import java.text.ParsePosition;
@@ -128,12 +129,65 @@ class UnicodeSetLexer {
                 String string,
                 RuleCharacterIterator.Position after,
                 UnicodeSet set,
-                CharSequence sourceText) {
+                CharSequence sourceText,
+                boolean separated,
+                LexicalElement preceding,
+                UnicodeSetLexer lexer) {
             category_ = category;
             string_ = string;
             after_ = after;
             set_ = set;
             sourceText_ = sourceText;
+            if (separated || preceding == null) {
+                return;
+            }
+            if (preceding.isSetOperator('[')
+                    && category == Category.LITERAL_ELEMENT
+                    && codePoint() == ':') {
+                // Not in the C++ version since we do not have lexer error messages there:
+                // set the position between the two unseparated lexical elements so the pointing
+                // hand shows up where a space is needed.
+                lexer.chars_.setPos(preceding.after_);
+                throw lexer.lexicalError(
+                        "white-space other than ignorable-format-control is required between"
+                                + " set-operator [ and literal-element :");
+            } else if (preceding.category_ == Category.ESCAPED_ELEMENT) {
+                if (UCharacter.isHighSurrogate(preceding.codePoint())
+                        && category_ == Category.ESCAPED_ELEMENT
+                        && UCharacter.isLowSurrogate(codePoint())) {
+                    lexer.chars_.setPos(preceding.after_);
+                    throw lexer.lexicalError(
+                            "white-space other than ignorable-format-control is required between"
+                                    + " escaped-elements representing high and low surrogates");
+                } else if (preceding.sourceText_.length() <= 3
+                        && category == Category.LITERAL_ELEMENT) {
+                    int cp = codePoint();
+                    if (preceding.sourceText_.charAt(1) == 'x') {
+                        if ((cp >= '0' && cp <= '9')
+                                || (cp >= 'A' && cp <= 'F')
+                                || (cp >= 'a' && cp <= 'f')) {
+                            lexer.chars_.setPos(preceding.after_);
+                            throw lexer.lexicalError(
+                                    "white-space other than ignorable-format-control is required"
+                                            + " between escaped-element "
+                                            + preceding.sourceText_
+                                            + " and literal-element "
+                                            + sourceText_);
+                        }
+                    } else if (preceding.sourceText_.charAt(1) >= '0'
+                            && preceding.sourceText_.charAt(1) <= '7') {
+                        if (cp >= '0' && cp <= '7') {
+                            lexer.chars_.setPos(preceding.after_);
+                            throw lexer.lexicalError(
+                                    "white-space other than ignorable-format-control is required"
+                                            + " between escaped-element "
+                                            + preceding.sourceText_
+                                            + " and literal-element "
+                                            + sourceText_);
+                        }
+                    }
+                }
+            }
         }
 
         Category category_;
@@ -173,7 +227,7 @@ class UnicodeSetLexer {
     LexicalElement lookahead() {
         if (ahead_ == null) {
             RuleCharacterIterator.Position before = getPos();
-            ahead_ = nextToken();
+            ahead_ = nextToken(behind_);
             chars_.setPos(before);
         }
         return ahead_;
@@ -186,7 +240,7 @@ class UnicodeSetLexer {
             // here, since we start from ahead_.after_.
             RuleCharacterIterator.Position before = getPos();
             chars_.setPos(lookahead().after_);
-            ahead2_ = nextToken();
+            ahead2_ = nextToken(ahead_);
             chars_.setPos(before);
         }
         return ahead2_;
@@ -215,6 +269,7 @@ class UnicodeSetLexer {
         // we would be working on incorrect values of `getPos`.  This is why the result of
         // `getCharacterIterator` must no longer be used.
         chars_.setPos(lookahead().after_);
+        behind_ = ahead_;
         ahead_ = ahead2_;
         ahead2_ = null;
     }
@@ -226,11 +281,38 @@ class UnicodeSetLexer {
         return result;
     }
 
-    private LexicalElement nextToken() {
+    private LexicalElement nextToken(LexicalElement preceding) {
+        boolean separated = false;
+        if ((charsOptions_ & RuleCharacterIterator.SKIP_WHITESPACE) != 0) {
+            int s;
+            RuleCharacterIterator.Position pos = new RuleCharacterIterator.Position();
+            for (; ; ) {
+                chars_.getPos(pos);
+                s =
+                        chars_.next(
+                                charsOptions_
+                                        & ~(RuleCharacterIterator.PARSE_ESCAPES
+                                                | RuleCharacterIterator.SKIP_WHITESPACE));
+                if (!PatternProps.isWhiteSpace(s)) {
+                    chars_.setPos(pos);
+                    break;
+                }
+                if (s != '\u200E' && s != '\u200F') {
+                    separated = true;
+                }
+            }
+        }
         chars_.skipIgnored(charsOptions_);
         if (chars_.atEnd()) {
             return new LexicalElement(
-                    LexicalElement.Category.END_OF_TEXT, null, getPos(), /* set= */ null, "");
+                    LexicalElement.Category.END_OF_TEXT,
+                    null,
+                    getPos(),
+                    /* set= */ null,
+                    "",
+                    separated,
+                    preceding,
+                    this);
         }
         final int start = parsePosition_.getIndex();
         final RuleCharacterIterator.Position before = getPos();
@@ -266,7 +348,10 @@ class UnicodeSetLexer {
                             Character.toString(queryResult),
                             getPos(),
                             /* set= */ null,
-                            pattern_.subSequence(start, parsePosition_.getIndex()));
+                            pattern_.subSequence(start, parsePosition_.getIndex()),
+                            separated,
+                            preceding,
+                            this);
                 } else {
                     UnicodeSet queryResult = scanPropertyQueryAfterStart(first, second, start);
                     return new LexicalElement(
@@ -274,7 +359,10 @@ class UnicodeSetLexer {
                             null,
                             getPos(),
                             /* set= */ queryResult,
-                            pattern_.subSequence(start, parsePosition_.getIndex()));
+                            pattern_.subSequence(start, parsePosition_.getIndex()),
+                            separated,
+                            preceding,
+                            this);
                 }
             }
             // Not a property-query.
@@ -295,9 +383,24 @@ class UnicodeSetLexer {
                         "[",
                         getPos(),
                         /* set= */ null,
-                        pattern_.subSequence(start, parsePosition_.getIndex()));
+                        pattern_.subSequence(start, parsePosition_.getIndex()),
+                        separated,
+                        preceding,
+                        this);
             case '\\':
                 {
+                    int second =
+                            chars_.next(
+                                    charsOptions_
+                                            & ~(RuleCharacterIterator.PARSE_ESCAPES
+                                                    | RuleCharacterIterator.SKIP_WHITESPACE));
+                    if (second == '\u200E' || second == '\u200F') {
+                        // Prohibit \<LRM> and \<RLM>.
+                        throw lexicalError(
+                                "ignorable-format-control U+"
+                                        + Utility.hex(second)
+                                        + " is not an escapable-character");
+                    }
                     // Now try to parse the escape.
                     chars_.setPos(before);
                     int codePoint = chars_.next(charsOptions_);
@@ -306,7 +409,10 @@ class UnicodeSetLexer {
                             Character.toString(codePoint),
                             getPos(),
                             /* set= */ null,
-                            pattern_.subSequence(start, parsePosition_.getIndex()));
+                            pattern_.subSequence(start, parsePosition_.getIndex()),
+                            separated,
+                            preceding,
+                            this);
                 }
             case '&':
             case '-':
@@ -319,7 +425,10 @@ class UnicodeSetLexer {
                         Character.toString(first),
                         getPos(),
                         /* set= */ null,
-                        pattern_.subSequence(start, parsePosition_.getIndex()));
+                        pattern_.subSequence(start, parsePosition_.getIndex()),
+                        separated,
+                        preceding,
+                        this);
             case '{':
                 {
                     final var string = new StringBuilder();
@@ -348,6 +457,11 @@ class UnicodeSetLexer {
                                         "Invalid escape sequence \\"
                                                 + Character.toString(afterBackslash)
                                                 + " in UnicodeSet string");
+                            } else if (afterBackslash == '\u200E' || afterBackslash == '\u200F') {
+                                throw lexicalError(
+                                        "Invalid escape sequence \\<U+"
+                                                + Utility.hex(afterBackslash)
+                                                + "> in UnicodeSet string");
                             } else {
                                 chars_.setPos(beforeNext);
                                 // Parse the escape.
@@ -382,7 +496,10 @@ class UnicodeSetLexer {
                                     string.toString(),
                                     getPos(),
                                     /* set= */ null,
-                                    pattern_.subSequence(start, parsePosition_.getIndex()));
+                                    pattern_.subSequence(start, parsePosition_.getIndex()),
+                                    separated,
+                                    preceding,
+                                    this);
                         }
                         string.append(Character.toString(next));
                         codePointCount += 1;
@@ -397,18 +514,32 @@ class UnicodeSetLexer {
                         Character.toString(first),
                         getPos(),
                         /* set= */ null,
-                        pattern_.subSequence(start, parsePosition_.getIndex()));
+                        pattern_.subSequence(start, parsePosition_.getIndex()),
+                        separated,
+                        preceding,
+                        this);
         }
     }
 
     private LexicalElement lookupVariable(
             String name, int lexicalElementStart, int nameStart, ParsePosition nameEnd) {
+        // LexicalElements returned from this function and from evaluateVariable are always
+        // constructed with separated=true, preceding=null: the separation constraints are lexical,
+        // and variables are their own lexical elements; their values are not affected by lexical
+        // constraints.
         chars_.jumpahead(nameEnd.getIndex() - nameStart);
         final var source = pattern_.subSequence(lexicalElementStart, parsePosition_.getIndex());
         UnicodeSet precomputedSet = symbols_.lookupSet(name);
         if (precomputedSet != null) {
             return new LexicalElement(
-                    LexicalElement.Category.VARIABLE, null, getPos(), precomputedSet, source);
+                    LexicalElement.Category.VARIABLE,
+                    null,
+                    getPos(),
+                    precomputedSet,
+                    source,
+                    /* separated= */ true,
+                    /* preceding= */ null,
+                    this);
         }
         // The variable was not a precomputed set.  Use the old-fashioned `lookup`, which
         // should give us its source text; if that parses as a single set or element, use
@@ -568,7 +699,10 @@ class UnicodeSetLexer {
                     null,
                     getPos(),
                     /* set= */ expressionValue,
-                    source);
+                    source,
+                    /* separated= */ true,
+                    /* preceding= */ null,
+                    this);
         } else {
             expressionLexer.advance();
             if (!expressionLexer.atEnd()) {
@@ -595,7 +729,10 @@ class UnicodeSetLexer {
                             variableToken.string_,
                             getPos(),
                             variableToken.set_,
-                            source);
+                            source,
+                            /* separated= */ true,
+                            /* preceding= */ null,
+                            this);
                 default:
                     throw lexicalError(
                             "Value of variable "
@@ -716,6 +853,7 @@ class UnicodeSetLexer {
     final int charsOptions_;
     final SymbolTable symbols_;
     final XSymbolTable xsymbols_;
+    LexicalElement behind_;
     LexicalElement ahead_;
     LexicalElement ahead2_;
 }
