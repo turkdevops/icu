@@ -342,9 +342,6 @@ eu{
             ld{"Alaskako udako ordua"}
             lg{"Alaskako ordua"}
             ls{"Alaskako ordu estandarra"}
-            sd{"AKDT"}
-            sg{"AKT"}
-            ss{"AKST"}
         }
         "meta:Amazon"{
             ld{"Amazoniako udako ordua"}
@@ -355,33 +352,21 @@ eu{
             ld{"Ipar Amerikako erdialdeko udako ordua"}
             lg{"Ipar Amerikako erdialdeko ordua"}
             ls{"Ipar Amerikako erdialdeko ordu estandarra"}
-            sd{"CDT"}
-            sg{"CT"}
-            ss{"CST"}
         }
         "meta:America_Eastern"{
             ld{"Ipar Amerikako ekialdeko udako ordua"}
             lg{"Ipar Amerikako ekialdeko ordua"}
             ls{"Ipar Amerikako ekialdeko ordu estandarra"}
-            sd{"EDT"}
-            sg{"ET"}
-            ss{"EST"}
         }
         "meta:America_Mountain"{
             ld{"Ipar Amerikako mendialdeko udako ordua"}
             lg{"Ipar Amerikako mendialdeko ordua"}
             ls{"Ipar Amerikako mendialdeko ordu estandarra"}
-            sd{"MDT"}
-            sg{"MT"}
-            ss{"MST"}
         }
         "meta:America_Pacific"{
             ld{"Ipar Amerikako Pazifikoko udako ordua"}
             lg{"Ipar Amerikako Pazifikoko ordua"}
             ls{"Ipar Amerikako Pazifikoko ordu estandarra"}
-            sd{"PDT"}
-            sg{"PT"}
-            ss{"PST"}
         }
         "meta:Anadyr"{
             ld{"Anadyrreko udako ordua"}
@@ -417,9 +402,6 @@ eu{
             ld{"Ipar Amerikako Atlantikoko udako ordua"}
             lg{"Ipar Amerikako Atlantikoko ordua"}
             ls{"Ipar Amerikako Atlantikoko ordu estandarra"}
-            sd{"ADT"}
-            sg{"AT"}
-            ss{"AST"}
         }
         "meta:Australia_Central"{
             ld{"Australiako erdialdeko udako ordua"}

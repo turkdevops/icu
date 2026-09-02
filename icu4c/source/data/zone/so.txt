@@ -915,9 +915,6 @@ so{
             ld{"Waqtiga Dharaarta ee Hawaay-Alutiyaan"}
             lg{"Waqtiga Hawaay-Alutiyaan"}
             ls{"Waqtiga Caadiga ah ee Hawaii-Aleutian"}
-            sd{"HADT"}
-            sg{"HAT"}
-            ss{"HAST"}
         }
         "meta:Hong_Kong"{
             ld{"Waqtiga Xagaaga ee Hoong Koong"}

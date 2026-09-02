@@ -26,8 +26,5 @@ en_AU{
             dangi{"Korean Calendar"}
             ethiopic{"Ethiopian Calendar"}
         }
-        numbers%core{
-            mymrpao{"Myanmar Pa’O"}
-        }
     }
 }

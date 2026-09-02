@@ -298,9 +298,6 @@ sc{
             ld{"Ora legale de s’Alaska"}
             lg{"Ora de s’Alaska"}
             ls{"Ora istandard de s’Alaska"}
-            sd{"OLAK"}
-            sg{"OAK"}
-            ss{"OIAK"}
         }
         "meta:Amazon"{
             ld{"Ora legale de s’Amatzònia"}
@@ -311,33 +308,21 @@ sc{
             ld{"Ora legale tzentrale USA"}
             lg{"Ora tzentrale USA"}
             ls{"Ora istandard tzentrale USA"}
-            sd{"OLT"}
-            sg{"OT"}
-            ss{"OIT"}
         }
         "meta:America_Eastern"{
             ld{"Ora legale orientale USA"}
             lg{"Ora orientale USA"}
             ls{"Ora istandard orientale USA"}
-            sd{"OLO"}
-            sg{"OO"}
-            ss{"OIO"}
         }
         "meta:America_Mountain"{
             ld{"Ora legale Montes Pedrosos USA"}
             lg{"Ora Montes Pedrosos USA"}
             ls{"Ora istandard Montes Pedrosos USA"}
-            sd{"OLMP"}
-            sg{"OMP"}
-            ss{"OIMP"}
         }
         "meta:America_Pacific"{
             ld{"Ora legale de su Patzìficu USA"}
             lg{"Ora de su Patzìficu USA"}
             ls{"Ora istandard de su Patzìficu USA"}
-            sd{"OLP"}
-            sg{"OP"}
-            ss{"OIP"}
         }
         "meta:Anadyr"{
             ld{"Ora legale de Anadyr"}
@@ -373,9 +358,6 @@ sc{
             ld{"Ora legale de s’Atlànticu"}
             lg{"Ora de s’Atlànticu"}
             ls{"Ora istandard de s’Atlànticu"}
-            sd{"OLA"}
-            sg{"OA"}
-            ss{"OIA"}
         }
         "meta:Australia_Central"{
             ld{"Ora legale de s’Austràlia tzentrale"}
@@ -476,9 +458,6 @@ sc{
             ld{"Ora legale de Cuba"}
             lg{"Ora de Cuba"}
             ls{"Ora istandard de Cuba"}
-            sd{"OLC"}
-            sg{"OC"}
-            ss{"OIC"}
         }
         "meta:Davis"{
             ls{"Ora de Davis"}

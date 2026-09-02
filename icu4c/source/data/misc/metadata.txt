@@ -1072,6 +1072,10 @@ metadata:table(nofallback){
                 reason{"overlong"}
                 replacement{"mn"}
             }
+            mrd{
+                reason{"deprecated"}
+                replacement{"mgp"}
+            }
             mri{
                 reason{"overlong"}
                 replacement{"mi"}
@@ -1495,6 +1499,10 @@ metadata:table(nofallback){
             sh{
                 reason{"legacy"}
                 replacement{"sr_Latn"}
+            }
+            shl{
+                reason{"deprecated"}
+                replacement{"mrh"}
             }
             sin{
                 reason{"overlong"}

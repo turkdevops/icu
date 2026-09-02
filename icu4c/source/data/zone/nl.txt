@@ -276,9 +276,6 @@ nl{
             ld{"Alaska-zomertijd"}
             lg{"Alaska-tijd"}
             ls{"Alaska-standaardtijd"}
-            sd{"AKDT"}
-            sg{"AKT"}
-            ss{"AKST"}
         }
         "meta:Amazon"{
             ld{"Amazone-zomertijd"}
@@ -289,33 +286,21 @@ nl{
             ld{"Central-zomertijd"}
             lg{"Central-tijd"}
             ls{"Central-standaardtijd"}
-            sd{"CDT"}
-            sg{"CT"}
-            ss{"CST"}
         }
         "meta:America_Eastern"{
             ld{"Eastern-zomertijd"}
             lg{"Eastern-tijd"}
             ls{"Eastern-standaardtijd"}
-            sd{"EDT"}
-            sg{"ET"}
-            ss{"EST"}
         }
         "meta:America_Mountain"{
             ld{"Mountain-zomertijd"}
             lg{"Mountain-tijd"}
             ls{"Mountain-standaardtijd"}
-            sd{"MDT"}
-            sg{"MT"}
-            ss{"MST"}
         }
         "meta:America_Pacific"{
             ld{"Pacific-zomertijd"}
             lg{"Pacific-tijd"}
             ls{"Pacific-standaardtijd"}
-            sd{"PDT"}
-            sg{"PT"}
-            ss{"PST"}
         }
         "meta:Anadyr"{
             ld{"Anadyr-zomertijd"}
@@ -351,9 +336,6 @@ nl{
             ld{"Atlantic-zomertijd"}
             lg{"Atlantic-tijd"}
             ls{"Atlantic-standaardtijd"}
-            sd{"ADT"}
-            sg{"AT"}
-            ss{"AST"}
         }
         "meta:Australia_Central"{
             ld{"Midden-Australische zomertijd"}
@@ -556,15 +538,11 @@ nl{
         }
         "meta:Hawaii"{
             ls{"Hawaii-standaardtijd"}
-            ss{"HST"}
         }
         "meta:Hawaii_Aleutian"{
             ld{"Hawaii-Aleoetische zomertijd"}
             lg{"Hawaii-Aleoetische tijd"}
             ls{"Hawaii-Aleoetische standaardtijd"}
-            sd{"HADT"}
-            sg{"HAT"}
-            ss{"HAST"}
         }
         "meta:Hong_Kong"{
             ld{"Hongkongse zomertijd"}

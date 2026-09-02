@@ -25,9 +25,6 @@ om{
             ld{"Sa’aatii Guyyaa Alaaskaa"}
             lg{"Sa’aatii Alaaskaa"}
             ls{"Sa’aatii Istaandaardii Alaaskaa"}
-            sd{"AKDT"}
-            sg{"AKT"}
-            ss{"AKST"}
         }
         "meta:Amazon"{
             ld{"Sa’aatii Bonaa Amazoon"}
@@ -38,33 +35,21 @@ om{
             ld{"Sa’aatii Guyyaa Gidduugaleessaa"}
             lg{"Sa’aatii Gidduugaleessaa"}
             ls{"Sa’aatii Istaandaardii Gidduugaleessaa"}
-            sd{"CDT"}
-            sg{"CT"}
-            ss{"CST"}
         }
         "meta:America_Eastern"{
             ld{"Sa’aatii Guyyaa Bahaa"}
             lg{"Sa’aatii Bahaa"}
             ls{"Sa’aatii Istaandaardii Bahaa"}
-            sd{"EDT"}
-            sg{"ET"}
-            ss{"EST"}
         }
         "meta:America_Mountain"{
             ld{"Sa’aatii Guyyaa Maawonteen"}
             lg{"Sa’aatii Maawonteen"}
             ls{"Sa’aatii Istaandaardii Maawonteen"}
-            sd{"MDT"}
-            sg{"MT"}
-            ss{"MST"}
         }
         "meta:America_Pacific"{
             ld{"Sa’aatii Guyyaa Paasfiik"}
             lg{"Sa’aatii Paasfiik"}
             ls{"Sa’aatii Istaandaardii Paasfiik"}
-            sd{"PDT"}
-            sg{"PT"}
-            ss{"PST"}
         }
         "meta:Apia"{
             ld{"Sa’aatii Guyyaa Apia"}
@@ -95,9 +80,6 @@ om{
             ld{"Sa’aatii Guyyaa Atilaantiik"}
             lg{"Sa’aatii Atilaantiik"}
             ls{"Sa’aatii Istaandaardii Atilaantiik"}
-            sd{"ADT"}
-            sg{"AT"}
-            ss{"AST"}
         }
         "meta:Australia_Central"{
             ld{"Sa’aatii Guyyaa Awustiraaliyaa Gidduugaleessaa"}

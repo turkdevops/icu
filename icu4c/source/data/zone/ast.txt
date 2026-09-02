@@ -375,9 +375,6 @@ ast{
             ld{"Hora braniega d’Alaska"}
             lg{"Hora d’Alaska"}
             ls{"Hora estándar d’Alaska"}
-            sd{"AKDT"}
-            sg{"AKT"}
-            ss{"AKST"}
         }
         "meta:Amazon"{
             ld{"Hora braniega del Amazonas"}
@@ -388,33 +385,21 @@ ast{
             ld{"Hora braniega central norteamericana"}
             lg{"Hora central norteamericana"}
             ls{"Hora estándar central norteamericana"}
-            sd{"CDT"}
-            sg{"CT"}
-            ss{"CST"}
         }
         "meta:America_Eastern"{
             ld{"Hora braniega del este norteamericanu"}
             lg{"Hora del este norteamericanu"}
             ls{"Hora estándar del este norteamericanu"}
-            sd{"EDT"}
-            sg{"ET"}
-            ss{"EST"}
         }
         "meta:America_Mountain"{
             ld{"Hora braniega de les montañes norteamericanes"}
             lg{"Hora de les montañes norteamericanes"}
             ls{"Hora estándar de les montañes norteamericanes"}
-            sd{"MDT"}
-            sg{"MT"}
-            ss{"MST"}
         }
         "meta:America_Pacific"{
             ld{"Hora braniega del Pacíficu norteamericanu"}
             lg{"Hora del Pacíficu norteamericanu"}
             ls{"Hora estándar del Pacíficu norteamericanu"}
-            sd{"PDT"}
-            sg{"PT"}
-            ss{"PST"}
         }
         "meta:Anadyr"{
             ld{"hora braniega d’Anadyr"}
@@ -450,9 +435,6 @@ ast{
             ld{"Hora braniega del Atlánticu"}
             lg{"Hora del Atlánticu"}
             ls{"Hora estándar del Atlánticu"}
-            sd{"ADT"}
-            sg{"AT"}
-            ss{"AST"}
         }
         "meta:Australia_Central"{
             ld{"Hora braniega d’Australia central"}
@@ -645,9 +627,6 @@ ast{
             ld{"Hora braniega de Hawaii-Aleutianes"}
             lg{"Hora de Hawaii-Aleutianes"}
             ls{"Hora estándar de Hawaii-Aleutianes"}
-            sd{"HADT"}
-            sg{"HAT"}
-            ss{"HAST"}
         }
         "meta:Hong_Kong"{
             ld{"Hora braniega de Ḥong Kong"}

@@ -526,9 +526,6 @@ ga{
             ld{"Am Samhraidh an Aigéin Chiúin"}
             lg{"Am an Aigéin Chiúin"}
             ls{"Am Caighdeánach an Aigéin Chiúin"}
-            sd{"ASAC"}
-            sg{"AAC"}
-            ss{"ACAC"}
         }
         "meta:Anadyr"{
             ld{"Am Samhraidh Anadyr"}

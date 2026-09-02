@@ -3293,6 +3293,7 @@ supplementalData:table(nofallback){
                 "mnt",
                 "mo",
                 "mof",
+                "mrd",
                 "mst",
                 "mup",
                 "mvm",
@@ -3357,6 +3358,7 @@ supplementalData:table(nofallback){
                 "sgl",
                 "sgo",
                 "sh",
+                "shl",
                 "skk",
                 "slq",
                 "smd",
@@ -4730,7 +4732,8 @@ supplementalData:table(nofallback){
                 "mqa~c",
                 "mqe~z",
                 "mr",
-                "mra~h",
+                "mra~c",
+                "mre~h",
                 "mrj~z",
                 "ms",
                 "msb~s",
@@ -5267,7 +5270,8 @@ supplementalData:table(nofallback){
                 "sgr~u",
                 "sgw~z",
                 "sha~e",
-                "shg~z",
+                "shg~k",
+                "shm~z",
                 "si",
                 "sia~b",
                 "sid~m",
@@ -13206,11 +13210,6 @@ supplementalData:table(nofallback){
                 scripts{"Modi"}
             }
         }
-        mrd{
-            primary{
-                scripts{"Deva"}
-            }
-        }
         mrh{
             primary{
                 scripts{"Latn"}
@@ -17706,7 +17705,6 @@ supplementalData:table(nofallback){
             "es_UY",
             "es_VE",
         }
-        fr_HT{"ht"}
         no{
             "nb",
             "nn",
@@ -29142,9 +29140,6 @@ supplementalData:table(nofallback){
             }
             mgp{
                 populationShareF:int{48110000}
-            }
-            mrd{
-                populationShareF:int{47830000}
             }
             ne{
                 officialStatus{"official"}

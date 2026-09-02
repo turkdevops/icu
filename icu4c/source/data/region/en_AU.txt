@@ -22,6 +22,5 @@ en_AU{
     }
     Countries%short{
         HM{"Heard and McDonald Islands"}
-        SH{"St Helena"}
     }
 }

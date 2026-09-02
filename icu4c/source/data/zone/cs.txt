@@ -444,9 +444,6 @@ cs{
             ld{"aljašský letní čas"}
             lg{"aljašský čas"}
             ls{"aljašský standardní čas"}
-            sd{"AKDT"}
-            sg{"AKT"}
-            ss{"AKST"}
         }
         "meta:Amazon"{
             ld{"amazonský letní čas"}
@@ -457,33 +454,21 @@ cs{
             ld{"severoamerický centrální letní čas"}
             lg{"severoamerický centrální čas"}
             ls{"severoamerický centrální standardní čas"}
-            sd{"CDT"}
-            sg{"CT"}
-            ss{"CST"}
         }
         "meta:America_Eastern"{
             ld{"severoamerický východní letní čas"}
             lg{"severoamerický východní čas"}
             ls{"severoamerický východní standardní čas"}
-            sd{"EDT"}
-            sg{"ET"}
-            ss{"EST"}
         }
         "meta:America_Mountain"{
             ld{"severoamerický horský letní čas"}
             lg{"severoamerický horský čas"}
             ls{"severoamerický horský standardní čas"}
-            sd{"MDT"}
-            sg{"MT"}
-            ss{"MST"}
         }
         "meta:America_Pacific"{
             ld{"severoamerický pacifický letní čas"}
             lg{"severoamerický pacifický čas"}
             ls{"severoamerický pacifický standardní čas"}
-            sd{"PDT"}
-            sg{"PT"}
-            ss{"PST"}
         }
         "meta:Anadyr"{
             ld{"anadyrský letní čas"}
@@ -519,9 +504,6 @@ cs{
             ld{"atlantický letní čas"}
             lg{"atlantický čas"}
             ls{"atlantický standardní čas"}
-            sd{"ADT"}
-            sg{"AT"}
-            ss{"AST"}
         }
         "meta:Australia_Central"{
             ld{"středoaustralský letní čas"}
