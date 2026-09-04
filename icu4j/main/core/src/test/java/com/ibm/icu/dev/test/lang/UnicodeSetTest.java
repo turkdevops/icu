@@ -4309,8 +4309,6 @@ public class UnicodeSetTest extends CoreTestFmwk {
                     new TestCase(
                             "[\\N{PRESENTATION FORM FOR VERTICAL RIGHT WHITE LENTICULAR BRACKET}]",
                             "[︘]"),
-                    /*
-                    // TODO(egg): ICU-3736 not yet done in Java.
                     // Loose matching: These were ill-formed in ICU 78 and earlier, and were
                     // made well-formed by ICU-3736.
                     new TestCase("[\\N{Latin small ligature o-e}]", "[œ]"),
@@ -4327,7 +4325,6 @@ public class UnicodeSetTest extends CoreTestFmwk {
                     new TestCase("[\\N{CJK unified ideograph 5-5-b-5}]", "[喵]"),
                     new TestCase("[{\\N{Hangul syllable YA}\\N{Hangul syllable ONG}}]", "[{야옹}]"),
                     new TestCase("[{\\N{Hangul-syllable-y-a}\\N{Hangul-syllable-o-ng}}]", "[{야옹}]"),
-                    */
                     new TestCase("[\\xDF]", "[ß]"),
                     new TestCase("[\\xDFF]", "[Fß]"),
                     new TestCase("[\\xD F]", "[\\u000DF]"),
@@ -4524,8 +4521,11 @@ public class UnicodeSetTest extends CoreTestFmwk {
                     {"\\N", "Ill-formed named-element \\N☜"},
                     {"[\\p{Some_Property=\\u}]", "Invalid escape"},
                     {"[:Some_Property=\\u:]", "Invalid escape"},
-                    {"\\p{Some_Property=\\N{SOME CHARACTER}}", "Invalid character name"},
-                    {"[\\N{}]", "Invalid character name"},
+                    {
+                        "\\p{Some_Property=\\N{SOME CHARACTER}}",
+                        "Ill-formed named-element: SOME CHARACTER not found \\p{Some_Property=\\N{SOME CHARACTER}☜}"
+                    },
+                    {"[\\N{}]", "Ill-formed named-element:  not found [\\N{}☜]"},
                     {
                         "[ \\N{FFFFFFFF:NOT A CODE POINT} ]",
                         "hexadecimal-digits out of range: FFFFFFFF [ \\N{FFFFFFFF:☜NOT A CODE POINT} ]"
@@ -4570,8 +4570,11 @@ public class UnicodeSetTest extends CoreTestFmwk {
                         "[ \\N{𒉀:12240:CUNEIFORM SIGN NAGA} ]",
                         "Ill-formed hexadecimal-digits: 𒉀 [ \\N{𒉀:☜12240:CUNEIFORM SIGN NAGA} ]"
                     },
-                    {"[ \\N{12240} ]", "Invalid character name"},
-                    {"[ \\N{12240:𒉀} ]", "Invalid character name"},
+                    {"[ \\N{12240} ]", "Ill-formed named-element: 12240 not found [ \\N{12240}☜ ]"},
+                    {
+                        "[ \\N{12240:𒉀} ]",
+                        "Ill-formed named-element: 𒉀 not found [ \\N{12240:𒉀}☜ ]"
+                    },
                     {
                         "[ \\N{𒉀:CUNEIFORM SIGN NAGA} ]",
                         "Ill-formed hexadecimal-digits: 𒉀 [ \\N{𒉀:☜CUNEIFORM SIGN NAGA} ]"
@@ -4595,15 +4598,33 @@ public class UnicodeSetTest extends CoreTestFmwk {
                         "Found doubly negated property-query [:^Noncharacter_Code_Point≠☜No:]"
                     },
                     // This should be [\a]; tracked by ICU-8963.
-                    {"[\\N{BEL}]", "Invalid character name"},
+                    {"[\\N{BEL}]", "Ill-formed named-element: BEL not found [\\N{BEL}☜]"},
                     // The leading hyphen does not match the medial hyphen in the real character
                     // name.
-                    {"[\\N{CJK UNIFIED IDEOGRAPH -55B5}]", "Invalid character name"},
+                    {
+                        "[\\N{CJK UNIFIED IDEOGRAPH -55B5}]",
+                        "Ill-formed named-element: CJK UNIFIED IDEOGRAPH -55B5 not found [\\N{CJK UNIFIED IDEOGRAPH -55B5}☜]"
+                    },
                     // A medial hyphen does not match the trailing hyphen in BKA-.
-                    {"[\\N{Tibetan mark BKA-SHOG-YIG-MGO}]", "Invalid character name"},
+                    {
+                        "[\\N{Tibetan mark BKA-SHOG-YIG-MGO}]",
+                        "Ill-formed named-element: Tibetan mark BKA-SHOG-YIG-MGO not found [\\N{Tibetan mark BKA-SHOG-YIG-MGO}☜]"
+                    },
                     // With -- in the query, neither hyphen is medial, and two hyphens do not match
                     // one.
-                    {"[\\N{Tibetan mark BKA--SHOG-YIG-MGO}]", "Invalid character name"},
+                    {
+                        "[\\N{Tibetan mark BKA--SHOG-YIG-MGO}]",
+                        "Ill-formed named-element: Tibetan mark BKA--SHOG-YIG-MGO not found [\\N{Tibetan mark BKA--SHOG-YIG-MGO}☜]"
+                    },
+                    // A final hyphen is trailing, so non-ignorable, and by rule R3 it would never
+                    // match a character name:
+                    // https://unicode.org/versions/Unicode17.0.0/core-spec/chapter-4/#G135174.
+                    // But an early version of the character name matcher would read out of the
+                    // bounds of the query in that case, so test it.
+                    {
+                        "[\\N{CJK UNIFIED IDEOGRAPH 55B5-}]",
+                        "Ill-formed named-element: CJK UNIFIED IDEOGRAPH 55B5- not found [\\N{CJK UNIFIED IDEOGRAPH 55B5-}☜]"
+                    },
                 }) {
             final String expression = testCase[0];
             final String errorMessage = testCase[1];

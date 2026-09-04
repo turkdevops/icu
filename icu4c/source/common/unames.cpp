@@ -216,7 +216,7 @@ class CharacterNameQuery {
                 // and if assertions are disabled, query for the empty string (which will quickly
                 // find nothing).
                 skeletonLimit = skeletonData;
-                return;
+                break;
             }
             if (query[i] == ' ' || query[i] == '_') {
                 continue;
@@ -224,7 +224,7 @@ class CharacterNameQuery {
             if (query[i] == '-') {
                 bool isMedial;
                 bool is1180MedialHyphen = false;
-                if (i == 0 || i == query.length()) {
+                if (i == 0 || i == query.length() - 1) {
                     isMedial = false;
                 } else {
                     isMedial = isASCIILetterOrDigit(query[i - 1]) && isASCIILetterOrDigit(query[i + 1]);
@@ -232,7 +232,7 @@ class CharacterNameQuery {
                 // A medial hyphen is the hyphen in the name of U+1180 HANGUL JUNGSEONG O-E if what
                 // comes before skeletonizes to HANGULJUNGSEONGO and what comes after skeletonizes
                 // to E.
-                if (isMedial && i <= query.length() - 2 && uprv_toupper(query[i + 1]) == 'E' &&
+                if (isMedial && uprv_toupper(query[i + 1]) == 'E' &&
                     std::string_view(skeletonData, skeletonLimit - skeletonData) == "HANGULJUNGSEONGO") {
                     is1180MedialHyphen = true;
                     // If there is anything significant after the E, the part of the name after the

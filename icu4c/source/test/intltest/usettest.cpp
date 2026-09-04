@@ -4909,6 +4909,12 @@ void UnicodeSetTest::TestParseErrors() {
             uR"([\N{Tibetan mark BKA-SHOG-YIG-MGO}])",
             // With -- in the query, neither hyphen is medial, and two hyphens do not match one.
             uR"([\N{Tibetan mark BKA--SHOG-YIG-MGO}])",
+            // A final hyphen is trailing, so non-ignorable, and by rule R3 it
+            // would never match a character name:
+            // https://unicode.org/versions/Unicode17.0.0/core-spec/chapter-4/#G135174.
+            // But an early version of the character name matcher would read out
+            // of the bounds of the query in that case, so test it.
+            uR"([\N{CJK UNIFIED IDEOGRAPH 55B5-}])",
         }) {
         UErrorCode errorCode = U_ZERO_ERROR;
         const UnicodeSet set(expression, errorCode);

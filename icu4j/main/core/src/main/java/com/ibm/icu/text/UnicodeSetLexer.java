@@ -624,14 +624,18 @@ class UnicodeSetLexer {
                     start = parsePosition_.getIndex();
                 } else if (last == '}') {
                     final var name = pattern_.substring(start, parsePosition_.getIndex() - 1);
-                    // TODO(egg): Consider changing this to not construct a by default set when
-                    // fixing ICU-3736.  Note that we should still use the "Name" property of the
-                    // XSymbolTable if present, so we cannot directly call
-                    // UCharacter.getCharFromName vel sim., and in the presence of an XSymbolTable
-                    // we still need to construct a set.
-                    final var resultSet = new UnicodeSet();
-                    resultSet.applyPropertyAlias("Name", name, symbols_);
-                    int result = resultSet.charAt(0);
+                    // We should use the "Name" property of the XSymbolTable if present, so
+                    // in that case we cannot directly call UCharacter.getCharFromExtendedName
+                    // and we need to construct a set.
+                    int result;
+                    if (symbols_ != null && (symbols_ instanceof XSymbolTable)
+                            || UnicodeSet.getDefaultXSymbolTable() != null) {
+                        final var resultSet = new UnicodeSet();
+                        resultSet.applyPropertyAlias("Name", name, symbols_);
+                        result = resultSet.charAt(0);
+                    } else {
+                        result = UCharacter.getCharFromExtendedName(name);
+                    }
                     if (result < 0
                             || (hex != null && result != hex)
                             || (literal != null && result != literal)) {

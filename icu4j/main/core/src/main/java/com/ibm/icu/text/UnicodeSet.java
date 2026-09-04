@@ -3066,30 +3066,6 @@ public class UnicodeSet extends UnicodeFilter
         }
     }
 
-    /**
-     * Remove leading and trailing Pattern_White_Space and compress internal Pattern_White_Space to
-     * a single space character.
-     */
-    private static String mungeCharName(String source) {
-        source = PatternProps.trimWhiteSpace(source);
-        StringBuilder buf = null;
-        for (int i = 0; i < source.length(); ++i) {
-            char ch = source.charAt(i);
-            if (PatternProps.isWhiteSpace(ch)) {
-                if (buf == null) {
-                    buf = new StringBuilder().append(source, 0, i);
-                } else if (buf.charAt(buf.length() - 1) == ' ') {
-                    continue;
-                }
-                ch = ' '; // convert to ' '
-            }
-            if (buf != null) {
-                buf.append(ch);
-            }
-        }
-        return buf == null ? source : buf.toString();
-    }
-
     // ----------------------------------------------------------------
     // Property set API
     // ----------------------------------------------------------------
@@ -3228,11 +3204,9 @@ public class UnicodeSet extends UnicodeFilter
                         }
                     case UProperty.NAME:
                         {
-                            // Must munge name, since
-                            // UCharacter.charFromName() does not do
-                            // 'loose' matching.
-                            String buf = mungeCharName(valueAlias);
-                            int ch = UCharacter.getCharFromExtendedName(buf);
+                            // Contrary to ICU4C, ICU4J getCharFromExtendedName tries name aliases,
+                            // so we do not need to try again with getCharFromNameAlias.
+                            int ch = UCharacter.getCharFromExtendedName(valueAlias);
                             if (ch == -1) {
                                 throw new IllegalArgumentException("Invalid character name");
                             }
@@ -3245,11 +3219,7 @@ public class UnicodeSet extends UnicodeFilter
                         throw new IllegalArgumentException("Unicode_1_Name (na1) not supported");
                     case UProperty.AGE:
                         {
-                            // Must munge name, since
-                            // VersionInfo.getInstance() does not do
-                            // 'loose' matching.
-                            VersionInfo version =
-                                    VersionInfo.getInstance(mungeCharName(valueAlias));
+                            VersionInfo version = VersionInfo.getInstance(valueAlias);
                             applyFilter(
                                     new VersionFilter(version),
                                     CharacterPropertiesImpl.getInclusionsForProperty(p));
